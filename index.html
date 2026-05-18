@@ -426,170 +426,141 @@ footer a:hover{color:var(--orange)}
   .nav-cta{display:none}
   .nav-hamburger{display:flex}
 
-  /* ════ HERO: Exact replica of reference — photo full-width center,
-     "Hi I am + name" behind it top-left, bottom content below ════ */
+  /* ════ HERO: True stacked layout — photo block on top, content below ════ */
   .hero{
-    height:100svh;
-    min-height:600px;
+    min-height:auto;
     display:flex;
     flex-direction:column;
     position:relative;
     overflow:hidden;
   }
 
-  /* BG — warm orange radial top */
+  /* Orange-to-dark radial BG */
   .hero-bg{
-    background:
-      radial-gradient(ellipse 160% 95% at 50% -5%,#ff6b00 0%,#c23d00 18%,#6b1800 38%,#1a0400 60%,#000 100%);
+    background:radial-gradient(ellipse 160% 70% at 50% 0%,#ff6b00 0%,#d44500 15%,#7a1c00 35%,#200500 58%,#000 100%);
   }
 
-  /* Noise + vignette stay */
-  .hero-vignette{
-    background:
-      linear-gradient(to bottom,transparent 45%,rgba(0,0,0,.55) 72%,#000 100%),
-      radial-gradient(ellipse 40% 60% at 0% 50%,rgba(0,0,0,.3) 0%,transparent 100%),
-      radial-gradient(ellipse 40% 60% at 100% 50%,rgba(0,0,0,.3) 0%,transparent 100%);
-  }
-
-  /* ── "Hi, I am" + giant name — top-left, z-index BELOW photo ── */
-  .hero-name-wrap{
-    position:absolute;
-    top:72px;
-    left:0;right:0;
+  /* Photo glow — top */
+  .hero-photo-glow{
+    top:0;left:0;right:0;
+    width:100%;height:40vh;
     transform:none;
-    z-index:3;
+    background:radial-gradient(ellipse 90% 60% at 50% 0%,rgba(255,107,0,.5) 0%,transparent 70%);
+    filter:blur(40px);
+    z-index:1;
+  }
+
+  /* Photo block — sits at top, normal flow, no absolute */
+  .hero-photo{
+    position:relative;
+    top:auto;bottom:auto;left:auto;
+    transform:none;
+    display:block !important;
+    width:80%;
+    max-width:320px;
+    height:auto;
+    max-height:340px;
+    object-fit:contain;
+    object-position:top center;
+    z-index:4;
+    margin:60px auto 0;
+    -webkit-mask-image:linear-gradient(to bottom,black 60%,rgba(0,0,0,0) 100%);
+    mask-image:linear-gradient(to bottom,black 60%,rgba(0,0,0,0) 100%);
+    filter:brightness(1.05) contrast(1.03);
+  }
+
+  /* "Hi, I am" + giant name — below photo, normal flow */
+  .hero-name-wrap{
+    position:relative;
+    top:auto;left:auto;right:auto;
+    transform:none;
+    z-index:5;
     width:100%;
-    text-align:left;
-    padding-left:22px;
+    text-align:center;
+    padding:0 20px;
+    margin-top:-20px;
     pointer-events:none;
     display:flex;
     flex-direction:column;
-    align-items:flex-start;
+    align-items:center;
   }
   .hero-hi{
-    font-size:14px;
-    font-style:italic;
-    font-weight:400;
-    color:rgba(255,255,255,.9);
+    font-size:15px;
+    color:rgba(255,255,255,.88);
     display:block;
-    margin-bottom:0px;
-    letter-spacing:.02em;
+    margin-bottom:4px;
+    letter-spacing:.03em;
+    font-style:italic;
     font-family:var(--font-body);
-    align-self:flex-start;
+    align-self:center;
   }
   .hero-name{
-    font-size:clamp(68px,22vw,110px);
+    font-size:clamp(64px,20vw,100px);
     letter-spacing:.02em;
-    text-align:left;
-    line-height:.88;
+    text-align:center;
+    line-height:.9;
     white-space:nowrap;
     overflow:visible;
-    color:rgba(255,255,255,.97);
   }
 
-  /* ── Photo — full width, center, z-index ABOVE name ── */
-  .hero-photo-glow{
-    position:absolute;
-    top:0;left:0;right:0;
-    width:100%;height:55svh;
-    transform:none;
-    background:radial-gradient(ellipse 100% 70% at 50% 0%,rgba(255,107,0,.5) 0%,transparent 70%);
-    filter:blur(48px);
-    z-index:2;
-  }
-  .hero-photo{
-    position:absolute;
-    top:0;
-    left:50%;
-    transform:translateX(-50%);
-    width:100%;
-    max-width:420px;
-    height:64svh;
-    min-height:360px;
-    z-index:5;
-    display:block !important;
-    object-fit:cover;
-    object-position:top center;
-    -webkit-mask-image:linear-gradient(to bottom,black 0%,black 55%,rgba(0,0,0,0) 100%);
-    mask-image:linear-gradient(to bottom,black 0%,black 55%,rgba(0,0,0,0) 100%);
-  }
-
-  /* ── Bottom content — absolute, sits below photo fade ── */
+  /* Foreground content — below name, normal flow */
   .hero-fg{
-    position:absolute;
-    bottom:0;left:0;right:0;
-    z-index:8;
-    padding:0 22px 36px;
+    position:relative;
+    bottom:auto;left:auto;right:auto;
+    z-index:6;
+    padding:28px 22px 40px;
     display:flex;
     flex-direction:column;
-    align-items:center;
     gap:0;
-    background:none;
-    pointer-events:all;
+    background:linear-gradient(to bottom,transparent 0%,#050100 30%);
   }
 
-  /* Avatar strip — centered above trust text */
+  /* Avatar row */
   .hero-left-avatars{
     display:flex !important;
-    justify-content:center;
-    margin-bottom:6px;
+    margin-bottom:8px;
   }
   .hero-left-avatars .av{
-    width:30px;height:30px;font-size:8.5px;
-    border:2.5px solid #000;
-    margin-right:-9px;border-radius:50%;
+    width:32px;height:32px;font-size:9px;
+    border:2.5px solid #050100;
+    margin-right:-10px;border-radius:50%;
     overflow:hidden;flex-shrink:0;
     display:flex;align-items:center;justify-content:center;
     color:rgba(255,220,200,.95);font-weight:700;font-family:var(--font-body);
   }
-  /* Link/arrow chip next to avatars */
-  .hero-left-av-link{
-    width:30px;height:30px;
-    background:var(--orange);border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-size:13px;color:#fff;
-    margin-left:6px;flex-shrink:0;
-    z-index:1;
-  }
 
   .hero-left{
     position:relative;bottom:auto;left:auto;
-    max-width:100%;width:100%;
-    display:flex;flex-direction:column;align-items:center;
-    text-align:center;
+    max-width:100%;
+    display:flex;flex-direction:column;align-items:flex-start;
   }
 
   .h-trust{
     font-size:11.5px;
-    margin-bottom:10px;
-    display:flex;align-items:center;justify-content:center;gap:6px;
-    letter-spacing:.06em;
-    color:var(--orange);
+    margin-bottom:12px;
+    display:flex;align-items:center;gap:7px;
+    letter-spacing:.07em;
   }
 
   .h-headline{
     font-family:var(--font-head);
-    font-size:clamp(24px,7vw,36px);
+    font-size:clamp(28px,8vw,40px);
     font-weight:800;
-    line-height:1.08;
-    margin-bottom:20px;
+    line-height:1.06;
+    margin-bottom:22px;
     letter-spacing:-.01em;
     color:var(--white);
-    text-align:center;
   }
 
-  .h-btns{gap:12px;flex-wrap:nowrap;justify-content:center;width:100%}
+  .h-btns{gap:12px;flex-wrap:nowrap}
   .btn-p{
     font-size:15px;
-    padding:14px 36px;
+    padding:15px 32px;
     border-radius:100px;
-    box-shadow:0 6px 28px rgba(255,107,0,.5);
-    gap:12px;
-    flex:1;
-    max-width:280px;
-    justify-content:center;
+    box-shadow:0 6px 32px rgba(255,107,0,.5);
+    gap:14px;
   }
-  .btn-p .bi{width:28px;height:28px;font-size:13px}
+  .btn-p .bi{width:30px;height:30px;font-size:14px}
   .btn-g{display:none}
 
   /* Hide desktop right card */
@@ -597,7 +568,7 @@ footer a:hover{color:var(--orange)}
   .card-avs{display:none}
 
   /* Ticker */
-  .ticker{position:relative;bottom:auto;z-index:10}
+  .ticker{position:relative;bottom:auto}
   .t-item{font-size:14px;padding:0 20px;gap:16px}
 
   /* Sections */
@@ -648,13 +619,17 @@ footer a:hover{color:var(--orange)}
   nav{padding:12px 16px}
   .nav-logo{font-size:11px;letter-spacing:.12em}
 
-  .hero-name{font-size:clamp(48px,16vw,80px)}
-  .hero-name-wrap{padding-top:88px}
-  .hero-photo{width:90%;max-width:300px;max-height:48svh}
+  .hero-name{font-size:clamp(44px,14vw,72px)}
+  .hero-name-wrap{margin-top:-16px}
+  .hero-photo{width:72%;max-width:260px;max-height:280px;margin-top:55px}
 
-  .h-headline{font-size:clamp(22px,6.5vw,32px)}
-  .btn-p{font-size:13px;padding:12px 22px;gap:9px}
-  .btn-p .bi{width:24px;height:24px;font-size:12px}
+  .h-headline{font-size:clamp(20px,5.5vw,28px)}
+  .btn-p{font-size:13px;padding:11px 18px;gap:8px}
+  .btn-p .bi{width:22px;height:22px;font-size:11px}
+
+  .hero-card{padding:14px 16px;border-radius:14px}
+  .card-txt{font-size:11.5px}
+  .cbtn{font-size:10px;padding:6px 11px}
 
   .stat-num{font-size:34px}
   .stat-box{padding:18px}
@@ -685,8 +660,8 @@ footer a:hover{color:var(--orange)}
    RESPONSIVE — VERY SMALL (≤360px)
 ════════════════════════════════════════════════ */
 @media(max-width:360px){
-  .hero-name{font-size:clamp(40px,13vw,56px)}
-  .hero-photo{width:92%;max-height:42svh}
+  .hero-name{font-size:40px}
+  .hero-photo{width:70%;max-width:220px;max-height:240px;margin-top:50px}
   .h-headline{font-size:18px}
   .btn-p,.btn-g{font-size:12px}
   .stat-num{font-size:30px}
