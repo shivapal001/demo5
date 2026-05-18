@@ -426,157 +426,141 @@ footer a:hover{color:var(--orange)}
   .nav-cta{display:none}
   .nav-hamburger{display:flex}
 
-  /* ── HERO: full-screen with photo filling background ── */
+  /* ════ HERO: Photo top, content bottom — exact like screenshot ════ */
   .hero{
     min-height:100svh;
     display:flex;flex-direction:column;
     position:relative;overflow:hidden;
   }
 
-  /* Big name — centered, very top area, behind photo */
+  /* Orange-to-dark radial BG */
+  .hero-bg{
+    background:radial-gradient(ellipse 160% 100% at 50% 0%,#ff6b00 0%,#d44500 15%,#7a1c00 35%,#200500 58%,#000 100%);
+  }
+
+  /* "Hi, I am" + giant name — upper-left, BEHIND photo */
   .hero-name-wrap{
     position:absolute;
-    top:50%;left:50%;
-    transform:translate(-50%,-58%);
+    top:10%;
+    left:0;right:0;
+    transform:none;
     z-index:3;
-    width:100%;text-align:center;
+    width:100%;
+    text-align:left;
+    padding-left:20px;
     pointer-events:none;
   }
   .hero-hi{
     font-size:14px;
-    color:rgba(255,255,255,.82);
-    display:block;text-align:left;
-    padding-left:24px;
+    color:rgba(255,255,255,.88);
+    display:block;
     margin-bottom:2px;
-    letter-spacing:.04em;
+    letter-spacing:.03em;
+    font-style:italic;
+    font-family:var(--font-body);
   }
   .hero-name{
-    font-size:clamp(70px,20vw,110px);
-    letter-spacing:.03em;
-    text-align:center;
-    line-height:.95;
+    font-size:clamp(72px,23vw,115px);
+    letter-spacing:.02em;
+    text-align:left;
+    line-height:.88;
+    white-space:nowrap;
+    overflow:visible;
   }
 
-  /* Photo — tall, centered, fills most of screen */
+  /* Photo — fills top 58% of screen, centered horizontally, OVER name */
   .hero-photo{
     position:absolute;
-    bottom:160px;
+    top:0;
     left:50%;
     transform:translateX(-50%);
-    height:72svh;
-    max-height:520px;
+    height:60svh;
+    max-height:500px;
     width:auto;
-    z-index:4;
+    min-width:75%;
+    max-width:115%;
+    z-index:5;
     display:block !important;
-    object-fit:contain;
-    object-position:bottom center;
-    -webkit-mask-image:linear-gradient(to bottom,black 55%,rgba(0,0,0,.0) 100%);
-    mask-image:linear-gradient(to bottom,black 55%,rgba(0,0,0,.0) 100%);
+    object-fit:cover;
+    object-position:top center;
+    -webkit-mask-image:linear-gradient(to bottom,black 0%,black 50%,rgba(0,0,0,0) 100%);
+    mask-image:linear-gradient(to bottom,black 0%,black 50%,rgba(0,0,0,0) 100%);
   }
 
-  /* Bottom info block — stacked below photo */
+  /* Photo glow — top */
+  .hero-photo-glow{
+    top:0;left:0;right:0;
+    width:100%;height:45vh;
+    transform:none;
+    background:radial-gradient(ellipse 90% 60% at 50% 0%,rgba(255,107,0,.5) 0%,transparent 70%);
+    filter:blur(40px);
+  }
+
+  /* Bottom content block — sits below photo, dark bg */
   .hero-fg{
     position:absolute;
     bottom:0;left:0;right:0;
     z-index:8;
-    padding:0 22px 24px;
+    padding:28px 22px 36px;
     display:flex;flex-direction:column;gap:0;
-    background:linear-gradient(to top,rgba(0,0,0,.97) 0%,rgba(0,0,0,.88) 60%,transparent 100%);
-    padding-top:32px;
+    background:linear-gradient(to top,#050100 0%,#050100 45%,rgba(5,1,0,.75) 70%,transparent 100%);
   }
 
-  /* Trust badge + avatars row */
+  /* Avatar row — above trust text */
+  .hero-left-avatars{
+    display:flex !important;
+    margin-bottom:8px;
+  }
+  .hero-left-avatars .av{
+    width:32px;height:32px;font-size:9px;
+    border:2.5px solid #050100;
+    margin-right:-10px;border-radius:50%;
+    overflow:hidden;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    color:rgba(255,220,200,.95);font-weight:700;font-family:var(--font-body);
+  }
+
   .hero-left{
     position:relative;bottom:auto;left:auto;
     max-width:100%;
-    display:flex;flex-direction:column;
-    align-items:flex-start;
+    display:flex;flex-direction:column;align-items:flex-start;
   }
 
-  /* Avatars row above trust text */
-  .card-avs{
-    display:flex;
-    margin-bottom:6px;
-  }
-  .av{
-    width:28px;height:28px;
-    font-size:8px;
-  }
-
-  /* Trust badge */
   .h-trust{
-    font-size:11px;
-    margin-bottom:10px;
-    display:flex;align-items:center;gap:6px;
-  }
-  /* Show avatar row in hero-left area above trust text */
-  .hero-left-avatars{
-    display:flex;margin-bottom:6px;
-  }
-  .hero-left-avatars .av{
-    width:28px;height:28px;font-size:8px;
-    border:2px solid rgba(8,2,0,.9);
-    margin-right:-8px;border-radius:50%;overflow:hidden;
-    display:flex;align-items:center;justify-content:center;
-    color:rgba(255,220,200,.9);font-weight:700;
+    font-size:11.5px;
+    margin-bottom:12px;
+    display:flex;align-items:center;gap:7px;
+    letter-spacing:.07em;
   }
 
   .h-headline{
-    font-size:clamp(24px,7vw,34px);
-    line-height:1.08;
-    margin-bottom:18px;
-    letter-spacing:-.015em;
+    font-family:var(--font-head);
+    font-size:clamp(28px,8vw,40px);
+    font-weight:800;
+    line-height:1.06;
+    margin-bottom:22px;
+    letter-spacing:-.01em;
+    color:var(--white);
   }
-  .h-btns{gap:10px;flex-wrap:nowrap}
+
+  .h-btns{gap:12px;flex-wrap:nowrap}
   .btn-p{
-    font-size:14px;padding:13px 22px;
-    box-shadow:0 4px 24px rgba(255,107,0,.4);
+    font-size:15px;
+    padding:15px 32px;
+    border-radius:100px;
+    box-shadow:0 6px 32px rgba(255,107,0,.5);
+    gap:14px;
   }
+  .btn-p .bi{width:30px;height:30px;font-size:14px}
   .btn-g{display:none}
 
-  /* Hide the bottom right card on mobile — avatars shown above instead */
+  /* Hide desktop right card */
   .hero-card{display:none}
+  .card-avs{display:none}
 
-  /* Sections */
-  .about-sec,.svc-sec,.proj-sec,.testi-sec,.contact-sec{padding:60px 20px}
-  .divider{margin:0 20px}
-
-  /* About grid: single col */
-  .about-grid{grid-template-columns:1fr;gap:40px}
-  .section-title{font-size:clamp(38px,10vw,54px)!important}
-
-  /* Stats */
-  .stats-row{grid-template-columns:repeat(2,1fr)}
-  .stat-num{font-size:38px}
-
-  /* Services */
-  .svc-cards-grid{grid-template-columns:1fr}
-  .svc-card-wide{grid-column:span 1}
-  .svc-card-cta{padding:28px 24px}
-
-  /* Projects: single col */
-  .proj-grid{grid-template-columns:1fr}
-  .proj-card,.proj-card-big{min-height:240px;padding:28px 24px}
-  .proj-tag{left:24px}
-  .proj-link{bottom:20px;right:20px}
-  .proj-num{font-size:60px;right:20px}
-
-  /* Testimonials: single col */
-  .testi-grid{grid-template-columns:1fr}
-  .testi-card-big{grid-column:span 1}
-  .testi-txt{font-size:14px}
-  .testi-card-big .testi-txt{font-size:15px}
-
-  /* Contact */
-  .contact-ttl{font-size:clamp(48px,12vw,72px)!important}
-  .contact-sub{font-size:16px;margin-bottom:40px}
-  .c-links{flex-direction:column;align-items:center}
-  .c-link{width:100%;max-width:320px;justify-content:center}
-  .c-link.email{font-size:13px;padding:13px 20px}
-
-  /* Footer */
-  footer{flex-direction:column;gap:8px;text-align:center;padding:22px 20px}
-}
+  /* Ticker */
+  .ticker{position:relative;bottom:auto}
+  .t-item{font-size:14px;padding:0 20px;gap:16px}
 
   /* Sections */
   .about-sec,.svc-sec,.proj-sec,.testi-sec,.contact-sec{padding:60px 20px}
@@ -626,12 +610,12 @@ footer a:hover{color:var(--orange)}
   nav{padding:12px 16px}
   .nav-logo{font-size:11px;letter-spacing:.12em}
 
-  .hero-name{font-size:clamp(60px,18vw,90px)}
-  .hero-name-wrap{top:48%;transform:translate(-50%,-60%)}
-  .hero-photo{height:65svh;max-height:440px;bottom:145px;display:block !important}
+  .hero-name{font-size:clamp(44px,14vw,72px)}
+  .hero-name-wrap{top:18%}
+  .hero-photo{height:52vw;max-height:260px;bottom:0;display:block !important}
 
-  .h-headline{font-size:clamp(22px,6vw,30px)}
-  .btn-p{font-size:13px;padding:12px 20px;gap:8px}
+  .h-headline{font-size:clamp(20px,5.5vw,28px)}
+  .btn-p{font-size:13px;padding:11px 18px;gap:8px}
   .btn-p .bi{width:22px;height:22px;font-size:11px}
 
   .hero-card{padding:14px 16px;border-radius:14px}
@@ -667,9 +651,9 @@ footer a:hover{color:var(--orange)}
    RESPONSIVE — VERY SMALL (≤360px)
 ════════════════════════════════════════════════ */
 @media(max-width:360px){
-  .hero-name{font-size:56px}
-  .hero-photo{height:60svh;max-height:380px;bottom:135px;display:block !important}
-  .h-headline{font-size:20px}
+  .hero-name{font-size:40px}
+  .hero-photo{height:48vw;max-height:210px;bottom:0;display:block !important}
+  .h-headline{font-size:18px}
   .btn-p,.btn-g{font-size:12px}
   .stat-num{font-size:30px}
 }
@@ -724,13 +708,6 @@ footer a:hover{color:var(--orange)}
   <div class="hero-fg">
     <!-- Bottom left -->
     <div class="hero-left">
-      <div class="hero-left-avatars">
-        <div class="av av1" style="width:28px;height:28px;font-size:8px;border:2px solid rgba(8,2,0,.9);border-radius:50%;margin-right:-8px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:rgba(255,220,200,.9);font-weight:700;">AH</div>
-        <div class="av av2" style="width:28px;height:28px;font-size:8px;border:2px solid rgba(8,2,0,.9);border-radius:50%;margin-right:-8px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:rgba(255,220,200,.9);font-weight:700;">SR</div>
-        <div class="av av3" style="width:28px;height:28px;font-size:8px;border:2px solid rgba(8,2,0,.9);border-radius:50%;margin-right:-8px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:rgba(255,220,200,.9);font-weight:700;">MK</div>
-        <div class="av av4" style="width:28px;height:28px;font-size:8px;border:2px solid rgba(8,2,0,.9);border-radius:50%;margin-right:-8px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:rgba(255,220,200,.9);font-weight:700;">PJ</div>
-        <div class="av av5" style="width:28px;height:28px;font-size:9px;border:2px solid rgba(8,2,0,.9);border-radius:50%;margin-right:0;overflow:hidden;display:flex;align-items:center;justify-content:center;color:rgba(255,220,200,.9);font-weight:700;background:#ff6b00;">↗</div>
-      </div>
       <div class="h-trust">Trusted by 200+ clients</div>
       <h1 class="h-headline">Websites that turn<br>visitors into clients</h1>
       <div class="h-btns">
