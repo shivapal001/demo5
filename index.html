@@ -357,42 +357,177 @@ section{position:relative;z-index:10}
 .proj-link{position:absolute;bottom:28px;right:28px;z-index:3;font-size:12px;font-weight:600;color:var(--orange);font-family:var(--font-body);letter-spacing:.04em;text-decoration:none;background:rgba(255,107,0,.1);border:1px solid rgba(255,107,0,.2);padding:7px 16px;border-radius:100px;transition:all .22s}
 .proj-link:hover{background:var(--orange);color:var(--white)}
 
-/* ─── TESTIMONIALS ─── */
-.testi-sec{padding:120px 52px;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(255,107,0,.06) 0%,transparent 60%),#000}
-.testi-inner{max-width:1200px;margin:0 auto}
-.testi-head{margin-bottom:50px}
-.testi-rating{display:flex;align-items:center;gap:12px;margin-top:20px}
-.stars{color:var(--orange);font-size:20px;letter-spacing:2px}
-.rating-txt{font-size:14px;color:rgba(255,255,255,.45);font-family:var(--font-body)}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.testi-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:32px 28px;position:relative;transition:all .3s ease;cursor:pointer}
-.testi-card-big{grid-column:span 2}
-.testi-card:hover{border-color:rgba(255,107,0,.2);background:rgba(255,107,0,.04);transform:translateY(-3px)}
-.testi-quote{font-family:var(--font-display);font-size:72px;font-weight:400;color:rgba(255,107,0,.25);line-height:.8;margin-bottom:16px}
-.testi-txt{font-size:15px;line-height:1.75;color:rgba(255,255,255,.78);font-family:var(--font-body);margin-bottom:24px;font-style:italic;font-weight:400}
-.testi-card-big .testi-txt{font-size:17px}
-.testi-person{display:flex;align-items:center;gap:14px}
-.testi-av{width:42px;height:42px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:rgba(255,255,255,.9);font-family:var(--font-body)}
-.testi-name{font-size:14px;font-weight:700;color:#fff;font-family:var(--font-body);letter-spacing:.01em}
-.testi-role{font-size:12px;color:rgba(255,255,255,.4);font-family:var(--font-body);margin-top:2px}
-.testi-stars{color:var(--orange);font-size:13px;letter-spacing:1px;margin-left:auto;align-self:flex-start}
+/* ─── TESTIMONIALS (slider style) ─── */
+.testi-sec{padding:100px 0 100px;background:#000;overflow:hidden}
+.testi-inner{max-width:1200px;margin:0 auto;padding:0 52px}
+.testi-layout{display:grid;grid-template-columns:300px 1fr;gap:60px;align-items:start}
+.testi-left{}
+.testi-left .section-label{margin-bottom:16px}
+.testi-left-title{font-family:var(--font-head);font-size:clamp(36px,4vw,52px);font-weight:900;line-height:1;color:var(--white);letter-spacing:-.02em;margin-bottom:28px}
+.testi-arrows{display:flex;gap:10px}
+.testi-arr{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:transparent;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .22s;flex-shrink:0}
+.testi-arr:hover{background:var(--orange);border-color:var(--orange)}
+.testi-slider-wrap{overflow:hidden;position:relative}
+.testi-slider-track{display:flex;gap:16px;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.testi-card{
+  flex-shrink:0;
+  width:280px;
+  background:rgba(18,6,0,.85);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:28px 24px;
+  cursor:pointer;transition:border-color .25s;
+}
+.testi-card:hover{border-color:rgba(255,107,0,.3)}
+.testi-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.testi-card-name{font-size:14px;font-weight:600;color:rgba(255,255,255,.9);font-family:var(--font-body)}
+.testi-card-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;font-family:var(--font-body)}
+.testi-card-score{font-family:var(--font-display);font-size:52px;font-weight:400;color:var(--white);line-height:1;margin-bottom:6px;letter-spacing:.02em}
+.testi-card-stars{color:var(--orange);font-size:14px;letter-spacing:2px;margin-bottom:14px}
+.testi-txt{font-size:13.5px;line-height:1.65;color:rgba(255,255,255,.65);font-family:var(--font-body)}
+/* keep old names used in mobile CSS */
+.testi-quote,.testi-card-big,.testi-head,.testi-rating,.stars,.rating-txt,.testi-grid,.testi-person,.testi-av,.testi-name,.testi-role,.testi-stars{}
 
-/* ─── CONTACT ─── */
-.contact-sec{padding:120px 52px;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(180,50,0,.25) 0%,transparent 70%),#000}
-.contact-in{max-width:960px;margin:0 auto;text-align:center}
-.contact-ttl{font-family:var(--font-head);font-size:clamp(52px,9vw,120px);font-weight:900;line-height:.9;letter-spacing:-.04em;color:var(--white);margin-bottom:16px}
-.contact-sub{font-size:18px;color:rgba(255,255,255,.45);margin-bottom:60px;font-family:var(--font-body)}
-.c-links{display:flex;justify-content:center;flex-wrap:wrap;gap:14px}
-.c-link{display:flex;align-items:center;gap:10px;padding:14px 28px;border-radius:100px;font-size:14px;font-weight:600;text-decoration:none;letter-spacing:.04em;transition:all .2s;cursor:pointer;font-family:var(--font-body)}
-.c-link.email{background:var(--orange);color:var(--white);border:1px solid transparent}
-.c-link.email:hover{background:var(--orange2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,107,0,.35)}
-.c-link.soc{background:rgba(255,255,255,.05);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.09)}
-.c-link.soc:hover{background:rgba(255,107,0,.12);border-color:rgba(255,107,0,.35);color:var(--white);transform:translateY(-2px)}
-.c-link svg{width:17px;height:17px;flex-shrink:0}
+/* ─── MARQUEE "LET'S WORK TOGETHER" ─── */
+.marquee-sec{
+  background:#000;
+  overflow:hidden;
+  padding:0;
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.marquee-track{
+  display:flex;gap:0;
+  animation:marquee 18s linear infinite;
+  width:max-content;
+  padding:22px 0;
+}
+.marquee-item{
+  display:flex;align-items:center;gap:28px;
+  padding:0 32px;
+  font-family:'Bebas Neue','Barlow Condensed','Arial Black',sans-serif;
+  font-size:clamp(80px,12vw,140px);
+  font-weight:400;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+  color:var(--white);
+  white-space:nowrap;
+  line-height:1;
+}
+.marquee-star{
+  color:var(--orange);
+  font-size:.55em;
+  display:inline-block;
+  flex-shrink:0;
+  line-height:1;
+}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ─── CONTACT (form style) ─── */
+.contact-sec{padding:100px 52px;background:#000}
+.contact-in{max-width:1200px;margin:0 auto}
+.contact-grid{display:grid;grid-template-columns:320px 1fr;gap:80px;align-items:start}
+.contact-left .section-label{margin-bottom:16px}
+.contact-ttl{font-family:var(--font-head);font-size:clamp(36px,4.5vw,56px);font-weight:900;line-height:1;letter-spacing:-.02em;color:var(--white);margin-bottom:14px}
+.contact-sub{font-size:14px;color:rgba(255,255,255,.45);font-family:var(--font-body);line-height:1.6}
+.contact-form{display:flex;flex-direction:column;gap:0}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.form-field{display:flex;flex-direction:column;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.15);margin-bottom:24px;position:relative}
+.form-field label{font-size:12px;font-weight:600;color:rgba(255,255,255,.45);letter-spacing:.08em;text-transform:uppercase;font-family:var(--font-body);margin-bottom:10px}
+.form-field input,.form-field textarea,.form-field select{
+  background:transparent;border:none;outline:none;
+  font-size:14px;color:rgba(255,255,255,.7);font-family:var(--font-body);
+  padding:0;resize:none;width:100%;
+}
+.form-field textarea{min-height:80px;padding-top:4px}
+.form-field select option{background:#0a0300;color:#fff}
+.form-check{display:flex;align-items:flex-start;gap:12px;margin-bottom:28px}
+.form-check input[type=checkbox]{
+  width:16px;height:16px;border:1px solid rgba(255,255,255,.25);
+  border-radius:3px;background:transparent;accent-color:var(--orange);
+  flex-shrink:0;margin-top:2px;cursor:pointer;
+}
+.form-check-lbl{font-size:12px;color:rgba(255,255,255,.4);font-family:var(--font-body);line-height:1.5}
+.form-check-lbl a{color:rgba(255,107,0,.75);text-decoration:underline}
+.form-submit{
+  display:inline-flex;align-items:center;gap:12px;
+  background:var(--orange);color:#fff;
+  font-size:14px;font-weight:600;font-family:var(--font-body);
+  padding:13px 24px;border-radius:100px;border:none;cursor:pointer;
+  letter-spacing:.03em;transition:all .22s;width:fit-content;
+}
+.form-submit:hover{background:var(--orange2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,107,0,.4)}
+.form-submit .arr{width:28px;height:28px;background:rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px}
 
 .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,107,0,.25),transparent);margin:0 52px}
 
-footer{border-top:1px solid rgba(255,255,255,.05);padding:26px 52px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:rgba(255,255,255,.28);font-family:var(--font-body)}
+/* ─── FOOTER ─── */
+footer{
+  background:#000;
+  padding:70px 52px 0;
+  position:relative;
+  overflow:hidden;
+}
+.footer-top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:50px;
+}
+.footer-tagline{
+  font-family:var(--font-head);
+  font-size:clamp(28px,3.5vw,42px);
+  font-weight:900;
+  line-height:1.1;
+  color:var(--white);
+  letter-spacing:-.02em;
+  max-width:380px;
+}
+.footer-cta-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--orange);color:#fff;
+  font-size:14px;font-weight:600;font-family:var(--font-body);
+  padding:12px 22px;border-radius:100px;text-decoration:none;
+  margin-top:20px;letter-spacing:.02em;
+  transition:all .22s;border:none;cursor:pointer;
+}
+.footer-cta-btn:hover{background:var(--orange2);box-shadow:0 8px 28px rgba(255,107,0,.4);transform:translateY(-2px)}
+.footer-cta-btn .arr{width:26px;height:26px;background:rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px}
+.footer-links-col h4{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55);font-family:var(--font-body);margin-bottom:14px}
+.footer-links-col a{display:block;font-size:13px;color:rgba(255,255,255,.5);text-decoration:none;font-family:var(--font-body);margin-bottom:8px;transition:color .18s}
+.footer-links-col a:hover{color:var(--orange)}
+.footer-big-name{
+  font-family:'Bebas Neue','Barlow Condensed','Arial Black',sans-serif;
+  font-size:clamp(100px,18vw,240px);
+  font-weight:400;
+  line-height:.88;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+  /* orange gradient with fade to transparent bottom */
+  background:linear-gradient(to bottom,
+    rgba(255,107,0,1) 0%,
+    rgba(200,60,0,.85) 30%,
+    rgba(140,30,0,.6) 60%,
+    rgba(80,10,0,.2) 85%,
+    transparent 100%
+  );
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  text-align:center;
+  width:100%;
+  display:block;
+  user-select:none;
+  margin-top:10px;
+  position:relative;
+}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.06);
+  padding:18px 0;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:11px;color:rgba(255,255,255,.22);font-family:var(--font-body);
+  position:relative;z-index:2;
+}
+.footer-dots{display:flex;gap:6px;align-items:center}
+.footer-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2)}
+.footer-dot.active{background:var(--orange)}
 footer a{color:rgba(255,107,0,.65);text-decoration:none}
 footer a:hover{color:var(--orange)}
 
@@ -925,73 +1060,64 @@ footer a:hover{color:var(--orange)}
 <!-- TESTIMONIALS -->
 <section class="testi-sec" id="testimonials">
   <div class="testi-inner">
-    <div class="testi-head reveal">
-      <div class="section-label">Client Reviews</div>
-      <h2 class="section-title" style="font-size:clamp(44px,6vw,82px)">What Clients<br>Say About Me</h2>
-      <div class="testi-rating">
-        <span class="stars">★★★★★</span>
-        <span class="rating-txt">4.9 / 5 · 200+ happy clients</span>
-      </div>
-    </div>
-    <div class="testi-grid">
-      <div class="testi-card testi-card-big reveal">
-        <div class="testi-quote">"</div>
-        <p class="testi-txt">Hadi built our entire school management system from scratch in under 6 weeks. The attention to detail, speed of delivery, and quality of code is unlike anything I've seen from a developer at this level. Absolutely world-class work.</p>
-        <div class="testi-person">
-          <div class="testi-av" style="background:#7a3200">SA</div>
-          <div>
-            <div class="testi-name">Sulaiman Al-Amin</div>
-            <div class="testi-role">Principal, Al-Noor Academy</div>
-          </div>
-          <div class="testi-stars">★★★★★</div>
+    <div class="testi-layout">
+      <!-- Left: title + arrows -->
+      <div class="testi-left reveal">
+        <div class="section-label">Testimonials</div>
+        <h2 class="testi-left-title">Trusted by<br>Clients<br>Worldwide</h2>
+        <div class="testi-arrows">
+          <button class="testi-arr" id="testiPrev">&#8592;</button>
+          <button class="testi-arr" id="testiNext">&#8594;</button>
         </div>
       </div>
-      <div class="testi-card reveal" style="transition-delay:.1s">
-        <div class="testi-quote">"</div>
-        <p class="testi-txt">Our landing page conversion rate went up 340% after Hadi redesigned it. He doesn't just code — he thinks about business results.</p>
-        <div class="testi-person">
-          <div class="testi-av" style="background:#004d40">RK</div>
-          <div>
-            <div class="testi-name">Rahul Krishnan</div>
-            <div class="testi-role">Founder, GrowthLab</div>
+      <!-- Right: slider -->
+      <div class="testi-slider-wrap reveal" style="transition-delay:.1s">
+        <div class="testi-slider-track" id="testiTrack">
+          <div class="testi-card">
+            <div class="testi-card-top">
+              <div class="testi-card-name">Sulaiman Al-Amin</div>
+              <div class="testi-card-avatar" style="background:#7a3200">SA</div>
+            </div>
+            <div class="testi-card-score">5.0</div>
+            <div class="testi-card-stars">★★★★★</div>
+            <p class="testi-txt">Hadi built our entire school management system from scratch in under 6 weeks. Absolutely world-class work and attention to detail.</p>
           </div>
-          <div class="testi-stars">★★★★★</div>
-        </div>
-      </div>
-      <div class="testi-card reveal" style="transition-delay:.2s">
-        <div class="testi-quote">"</div>
-        <p class="testi-txt">Fast, reliable, and incredibly talented. Delivered our e-commerce site with zero bugs and ahead of schedule. Will definitely hire again.</p>
-        <div class="testi-person">
-          <div class="testi-av" style="background:#1a237e">PM</div>
-          <div>
-            <div class="testi-name">Priya Menon</div>
-            <div class="testi-role">CEO, StyleNest Kerala</div>
+          <div class="testi-card">
+            <div class="testi-card-top">
+              <div class="testi-card-name">Rahul Krishnan</div>
+              <div class="testi-card-avatar" style="background:#004d40">RK</div>
+            </div>
+            <div class="testi-card-score">5.0</div>
+            <div class="testi-card-stars">★★★★★</div>
+            <p class="testi-txt">Landing page conversion rate went up 340% after Hadi redesigned it. He doesn't just code — he thinks about business results.</p>
           </div>
-          <div class="testi-stars">★★★★★</div>
-        </div>
-      </div>
-      <div class="testi-card reveal" style="transition-delay:.3s">
-        <div class="testi-quote">"</div>
-        <p class="testi-txt">The automation system Hadi built saves our team 20+ hours per week. The ROI was immediate. Best investment we've made this year.</p>
-        <div class="testi-person">
-          <div class="testi-av" style="background:#880e4f">NF</div>
-          <div>
-            <div class="testi-name">Nadia Farooq</div>
-            <div class="testi-role">Operations Head, SwiftCo</div>
+          <div class="testi-card">
+            <div class="testi-card-top">
+              <div class="testi-card-name">Priya Menon</div>
+              <div class="testi-card-avatar" style="background:#1a237e">PM</div>
+            </div>
+            <div class="testi-card-score">5.0</div>
+            <div class="testi-card-stars">★★★★★</div>
+            <p class="testi-txt">Fast, reliable, and incredibly talented. Delivered our e-commerce site with zero bugs and ahead of schedule. Will definitely hire again.</p>
           </div>
-          <div class="testi-stars">★★★★★</div>
-        </div>
-      </div>
-      <div class="testi-card reveal" style="transition-delay:.4s">
-        <div class="testi-quote">"</div>
-        <p class="testi-txt">Professional, communicative, and delivers exactly what he promises. The AI chatbot he integrated completely transformed our customer support flow.</p>
-        <div class="testi-person">
-          <div class="testi-av" style="background:#33691e">AR</div>
-          <div>
-            <div class="testi-name">Ahmed Raza</div>
-            <div class="testi-role">CTO, TechNest Solutions</div>
+          <div class="testi-card">
+            <div class="testi-card-top">
+              <div class="testi-card-name">Nadia Farooq</div>
+              <div class="testi-card-avatar" style="background:#880e4f">NF</div>
+            </div>
+            <div class="testi-card-score">5.0</div>
+            <div class="testi-card-stars">★★★★★</div>
+            <p class="testi-txt">The automation system Hadi built saves our team 20+ hours per week. The ROI was immediate. Best investment we've made this year.</p>
           </div>
-          <div class="testi-stars">★★★★★</div>
+          <div class="testi-card">
+            <div class="testi-card-top">
+              <div class="testi-card-name">Ahmed Raza</div>
+              <div class="testi-card-avatar" style="background:#33691e">AR</div>
+            </div>
+            <div class="testi-card-score">5.0</div>
+            <div class="testi-card-stars">★★★★★</div>
+            <p class="testi-txt">Professional, communicative, and delivers exactly what he promises. The AI chatbot completely transformed our customer support flow.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1000,36 +1126,91 @@ footer a:hover{color:var(--orange)}
 
 <div class="divider"></div>
 
+<!-- MARQUEE: LET'S WORK TOGETHER -->
+<div class="marquee-sec">
+  <div class="marquee-track" id="marqueeTrack">
+    <div class="marquee-item">TOGETHER <span class="marquee-star">✦</span> LET'S WORK</div>
+    <div class="marquee-item">TOGETHER <span class="marquee-star">✦</span> LET'S WORK</div>
+    <div class="marquee-item">TOGETHER <span class="marquee-star">✦</span> LET'S WORK</div>
+    <div class="marquee-item">TOGETHER <span class="marquee-star">✦</span> LET'S WORK</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
 <!-- CONTACT -->
 <section class="contact-sec" id="contact">
-  <div class="contact-in reveal">
-    <div class="section-label">Let's Work Together</div>
-    <h2 class="contact-ttl">Start a<br>Project</h2>
-    <p class="contact-sub">Got an idea? Let's turn it into something real.<br>Free consultation · 24h response guaranteed.</p>
-    <div class="c-links">
-      <a href="mailto:hadimehthash.web@gmail.com" class="c-link email">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-        hadimehthash.web@gmail.com
-      </a>
-      <a href="https://www.linkedin.com/in/abdul-hadi-mehthash-b27861389/" class="c-link soc" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-        LinkedIn
-      </a>
-      <a href="https://github.com/abdulhadimehthash" class="c-link soc" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-        GitHub
-      </a>
-      <a href="https://www.instagram.com/hadi.mehthashh/" class="c-link soc" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        Instagram
-      </a>
+  <div class="contact-in">
+    <div class="contact-grid">
+      <!-- Left -->
+      <div class="contact-left reveal">
+        <div class="section-label">Contact me</div>
+        <h2 class="contact-ttl">Start Your<br>Project</h2>
+        <p class="contact-sub">I'll help you plan and build a website that actually performs.</p>
+      </div>
+      <!-- Right: Form -->
+      <div class="contact-form reveal" style="transition-delay:.12s">
+        <div class="form-row">
+          <div class="form-field">
+            <label>Your Name</label>
+            <input type="text" placeholder="Robin Ford">
+          </div>
+          <div class="form-field">
+            <label>Email Address</label>
+            <input type="email" placeholder="hello@email.com">
+          </div>
+        </div>
+        <div class="form-field">
+          <label>I am interested in</label>
+          <select>
+            <option>Both web design and development</option>
+            <option>Web design only</option>
+            <option>Web development only</option>
+            <option>AI-Powered tools</option>
+            <option>Automation &amp; integrations</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Tell me about your project</label>
+          <textarea placeholder="Describe your project, goals, timeline..."></textarea>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="privacyCheck">
+          <label class="form-check-lbl" for="privacyCheck">By submitting this form I accept the <a href="#">Privacy Policy</a> of this site.</label>
+        </div>
+        <button class="form-submit">Send Project Details <span class="arr">↗</span></button>
+      </div>
     </div>
   </div>
 </section>
 
 <footer>
-  <span>© 2025 Hadi Mehthash · Kozhikode, Kerala</span>
-  <span>Built with care &amp; caffeine ☕</span>
+  <div class="footer-top">
+    <div class="footer-left">
+      <div class="footer-tagline">Not just a website,<br>real business results</div>
+      <a href="mailto:hadimehthash.web@gmail.com" class="footer-cta-btn">
+        Start a Project <span class="arr">↗</span>
+      </a>
+    </div>
+    <div class="footer-links-col">
+      <h4>Quick Links</h4>
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#testimonials">Testimonials</a>
+    </div>
+  </div>
+  <!-- Big name with orange gradient -->
+  <span class="footer-big-name">MEHTHASH</span>
+  <div class="footer-bottom">
+    <div class="footer-dots">
+      <div class="footer-dot active"></div>
+      <div class="footer-dot"></div>
+      <div class="footer-dot"></div>
+    </div>
+    <span>© 2025 Hadi Mehthash · Kozhikode, Kerala</span>
+    <span>Built with care &amp; caffeine ☕</span>
+  </div>
 </footer>
 
 <script>
@@ -1138,6 +1319,23 @@ document.querySelectorAll('.nav-pill a').forEach(l=>l.addEventListener('click',f
       el.style.opacity='1';
     },delay+100);
   });
+})();
+
+/* ── Testimonials slider ── */
+(function(){
+  const track=document.getElementById('testiTrack');
+  const prev=document.getElementById('testiPrev');
+  const next=document.getElementById('testiNext');
+  if(!track||!prev||!next)return;
+  let idx=0;
+  const cardW=296; // 280 + 16 gap
+  const cards=track.querySelectorAll('.testi-card');
+  const max=Math.max(0,cards.length-2);
+  function update(){
+    track.style.transform='translateX(-'+(idx*cardW)+'px)';
+  }
+  prev.addEventListener('click',()=>{idx=Math.max(0,idx-1);update();});
+  next.addEventListener('click',()=>{idx=Math.min(max,idx+1);update();});
 })();
 
 /* ── Smooth scroll for all anchor links ── */
