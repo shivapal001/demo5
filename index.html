@@ -426,151 +426,178 @@ footer a:hover{color:var(--orange)}
   .nav-cta{display:none}
   .nav-hamburger{display:flex}
 
-  /* ════ HERO: Flow layout — photo stacked above content, no overlap ════ */
+  /* ════ HERO: Exact replica of reference — photo full-width center,
+     "Hi I am + name" behind it top-left, bottom content below ════ */
   .hero{
-    min-height:100svh;
+    height:100svh;
+    min-height:600px;
     display:flex;
     flex-direction:column;
     position:relative;
     overflow:hidden;
   }
 
-  /* Orange-to-dark radial BG */
+  /* BG — warm orange radial top */
   .hero-bg{
-    background:radial-gradient(ellipse 160% 80% at 50% 0%,#ff6b00 0%,#d44500 15%,#7a1c00 35%,#200500 58%,#000 100%);
+    background:
+      radial-gradient(ellipse 160% 95% at 50% -5%,#ff6b00 0%,#c23d00 18%,#6b1800 38%,#1a0400 60%,#000 100%);
   }
 
-  /* Name wrap: shown in flow at top, behind photo */
+  /* Noise + vignette stay */
+  .hero-vignette{
+    background:
+      linear-gradient(to bottom,transparent 45%,rgba(0,0,0,.55) 72%,#000 100%),
+      radial-gradient(ellipse 40% 60% at 0% 50%,rgba(0,0,0,.3) 0%,transparent 100%),
+      radial-gradient(ellipse 40% 60% at 100% 50%,rgba(0,0,0,.3) 0%,transparent 100%);
+  }
+
+  /* ── "Hi, I am" + giant name — top-left, z-index BELOW photo ── */
   .hero-name-wrap{
-    position:relative;
-    top:auto;left:auto;
+    position:absolute;
+    top:72px;
+    left:0;right:0;
     transform:none;
     z-index:3;
     width:100%;
-    text-align:center;
-    padding:100px 20px 0;
+    text-align:left;
+    padding-left:22px;
     pointer-events:none;
     display:flex;
     flex-direction:column;
-    align-items:center;
+    align-items:flex-start;
   }
   .hero-hi{
-    font-size:13px;
-    color:rgba(255,255,255,.88);
+    font-size:14px;
+    font-style:italic;
+    font-weight:400;
+    color:rgba(255,255,255,.9);
     display:block;
-    margin-bottom:4px;
-    letter-spacing:.06em;
+    margin-bottom:0px;
+    letter-spacing:.02em;
     font-family:var(--font-body);
-    align-self:center;
+    align-self:flex-start;
   }
   .hero-name{
-    font-size:clamp(56px,20vw,100px);
-    letter-spacing:.03em;
-    text-align:center;
-    line-height:.9;
+    font-size:clamp(68px,22vw,110px);
+    letter-spacing:.02em;
+    text-align:left;
+    line-height:.88;
     white-space:nowrap;
     overflow:visible;
+    color:rgba(255,255,255,.97);
   }
 
-  /* Photo — centered, sits below name in flow */
-  .hero-photo{
-    position:relative;
-    top:auto;left:auto;
-    transform:none;
-    display:block !important;
-    width:85%;
-    max-width:340px;
-    height:auto;
-    max-height:55svh;
-    margin:0 auto -20px;
-    z-index:5;
-    object-fit:contain;
-    object-position:bottom center;
-    -webkit-mask-image:linear-gradient(to bottom,black 0%,black 60%,rgba(0,0,0,0) 100%);
-    mask-image:linear-gradient(to bottom,black 0%,black 60%,rgba(0,0,0,0) 100%);
-  }
-
-  /* Photo glow */
+  /* ── Photo — full width, center, z-index ABOVE name ── */
   .hero-photo-glow{
     position:absolute;
     top:0;left:0;right:0;
-    width:100%;height:50svh;
+    width:100%;height:55svh;
     transform:none;
-    background:radial-gradient(ellipse 90% 60% at 50% 0%,rgba(255,107,0,.45) 0%,transparent 70%);
-    filter:blur(40px);
+    background:radial-gradient(ellipse 100% 70% at 50% 0%,rgba(255,107,0,.5) 0%,transparent 70%);
+    filter:blur(48px);
     z-index:2;
   }
+  .hero-photo{
+    position:absolute;
+    top:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:420px;
+    height:64svh;
+    min-height:360px;
+    z-index:5;
+    display:block !important;
+    object-fit:cover;
+    object-position:top center;
+    -webkit-mask-image:linear-gradient(to bottom,black 0%,black 55%,rgba(0,0,0,0) 100%);
+    mask-image:linear-gradient(to bottom,black 0%,black 55%,rgba(0,0,0,0) 100%);
+  }
 
-  /* Bottom content block — normal flow, NOT absolute */
+  /* ── Bottom content — absolute, sits below photo fade ── */
   .hero-fg{
-    position:relative;
-    bottom:auto;left:auto;right:auto;
+    position:absolute;
+    bottom:0;left:0;right:0;
     z-index:8;
-    padding:28px 22px 44px;
+    padding:0 22px 36px;
     display:flex;
     flex-direction:column;
+    align-items:center;
     gap:0;
-    background:linear-gradient(to bottom,rgba(5,1,0,.0) 0%,#050100 18%,#050100 100%);
-    flex:1;
+    background:none;
+    pointer-events:all;
   }
 
-  /* Avatar row */
+  /* Avatar strip — centered above trust text */
   .hero-left-avatars{
     display:flex !important;
-    margin-bottom:10px;
+    justify-content:center;
+    margin-bottom:6px;
   }
   .hero-left-avatars .av{
-    width:32px;height:32px;font-size:9px;
-    border:2.5px solid #050100;
-    margin-right:-10px;border-radius:50%;
+    width:30px;height:30px;font-size:8.5px;
+    border:2.5px solid #000;
+    margin-right:-9px;border-radius:50%;
     overflow:hidden;flex-shrink:0;
     display:flex;align-items:center;justify-content:center;
     color:rgba(255,220,200,.95);font-weight:700;font-family:var(--font-body);
   }
+  /* Link/arrow chip next to avatars */
+  .hero-left-av-link{
+    width:30px;height:30px;
+    background:var(--orange);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;color:#fff;
+    margin-left:6px;flex-shrink:0;
+    z-index:1;
+  }
 
   .hero-left{
     position:relative;bottom:auto;left:auto;
-    max-width:100%;
-    display:flex;flex-direction:column;align-items:flex-start;
+    max-width:100%;width:100%;
+    display:flex;flex-direction:column;align-items:center;
+    text-align:center;
   }
 
   .h-trust{
-    font-size:11px;
+    font-size:11.5px;
     margin-bottom:10px;
-    display:flex;align-items:center;gap:7px;
-    letter-spacing:.07em;
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    letter-spacing:.06em;
+    color:var(--orange);
   }
 
   .h-headline{
     font-family:var(--font-head);
-    font-size:clamp(26px,7.5vw,38px);
+    font-size:clamp(24px,7vw,36px);
     font-weight:800;
-    line-height:1.06;
+    line-height:1.08;
     margin-bottom:20px;
     letter-spacing:-.01em;
     color:var(--white);
+    text-align:center;
   }
 
-  .h-btns{gap:12px;flex-wrap:nowrap}
+  .h-btns{gap:12px;flex-wrap:nowrap;justify-content:center;width:100%}
   .btn-p{
-    font-size:14px;
-    padding:13px 26px;
+    font-size:15px;
+    padding:14px 36px;
     border-radius:100px;
-    box-shadow:0 6px 28px rgba(255,107,0,.45);
-    gap:10px;
+    box-shadow:0 6px 28px rgba(255,107,0,.5);
+    gap:12px;
+    flex:1;
+    max-width:280px;
+    justify-content:center;
   }
-  .btn-p .bi{width:26px;height:26px;font-size:12px}
+  .btn-p .bi{width:28px;height:28px;font-size:13px}
   .btn-g{display:none}
 
   /* Hide desktop right card */
   .hero-card{display:none}
   .card-avs{display:none}
 
-  /* Vignette — hide on mobile, handled by hero-fg gradient */
-  .hero-vignette{display:none}
-
   /* Ticker */
-  .ticker{position:relative;bottom:auto}
+  .ticker{position:relative;bottom:auto;z-index:10}
   .t-item{font-size:14px;padding:0 20px;gap:16px}
 
   /* Sections */
