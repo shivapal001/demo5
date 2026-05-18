@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mehthash — Full Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@300,400,500,600,700&display=swap" rel="stylesheet">
+<style>
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@300,400,500,700,800,900&display=swap');
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --orange:#ff6b00;
+  --orange2:#ff7a18;
+  --dark:#000000;
+  --dark2:#0a0300;
+  --white:#ffffff;
+  --font-head:'Bebas Neue','Barlow Condensed','Cabinet Grotesk','Arial Black',sans-serif;
+  --font-display:'Bebas Neue','Impact','Arial Black',sans-serif;
+  --font-body:'Inter',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--dark2);color:var(--white);overflow-x:hidden;cursor:none}
+
+/* ─── CURSOR (desktop only) ─── */
+.cur{width:10px;height:10px;background:var(--orange);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .18s,height .18s;mix-blend-mode:difference}
+.cur-ring{width:34px;height:34px;border:1.5px solid var(--orange);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .14s ease;opacity:.55}
+@media(hover:none),(pointer:coarse){
+  body{cursor:auto}
+  .cur,.cur-ring{display:none}
+  a,button,.svc,.svc-card,.proj-card,.testi-card,.cbtn,.btn-p,.btn-g,.nav-cta,.c-link{cursor:pointer}
+}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 52px;
+}
+.nav-logo{
+  font-family:var(--font-head);font-weight:800;font-size:14px;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--white);text-decoration:none;
+}
+.nav-pill{
+  display:flex;gap:4px;
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:100px;padding:5px;
+}
+.nav-pill a{
+  color:rgba(255,255,255,.6);text-decoration:none;
+  font-size:13px;font-weight:500;
+  padding:7px 20px;border-radius:100px;
+  transition:all .22s;letter-spacing:.01em;
+  font-family:var(--font-body);
+}
+.nav-pill a.active,.nav-pill a:hover{background:var(--white);color:#0a0300}
+.nav-cta{
+  background:var(--orange);color:var(--white);
+  font-size:13px;font-weight:600;
+  padding:10px 22px;border-radius:100px;
+  text-decoration:none;
+  display:flex;align-items:center;gap:9px;
+  letter-spacing:.02em;font-family:var(--font-body);
+  border:none;cursor:none;
+  box-shadow:0 0 0 0 rgba(255,107,0,.4);
+  transition:all .22s;
+}
+.nav-cta:hover{background:var(--orange2);box-shadow:0 0 28px rgba(255,107,0,.45);transform:translateY(-1px)}
+.nav-cta .arr{width:22px;height:22px;background:rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px}
+
+/* Mobile hamburger */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;z-index:300}
+.nav-hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all .3s}
+.nav-hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.nav-hamburger.open span:nth-child(2){opacity:0}
+.nav-hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+/* Mobile menu drawer */
+.nav-drawer{
+  display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:250;
+  background:rgba(0,0,0,.97);backdrop-filter:blur(20px);
+  flex-direction:column;align-items:center;justify-content:center;gap:28px;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.nav-drawer.open{opacity:1;pointer-events:all}
+.nav-drawer a{
+  font-family:var(--font-head);font-size:clamp(36px,10vw,56px);
+  color:rgba(255,255,255,.7);text-decoration:none;letter-spacing:.08em;
+  transition:color .2s;
+}
+.nav-drawer a:hover{color:var(--orange)}
+.nav-drawer .nav-cta{font-size:15px;padding:14px 32px;margin-top:10px}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100vh;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.hero-bg{
+  position:absolute;inset:0;z-index:0;
+  background:radial-gradient(ellipse 130% 80% at 50% -5%,#ff6b00 0%,#c23d00 20%,#5c1200 42%,#1a0400 65%,#000000 100%);
+}
+#noise{position:absolute;inset:0;z-index:1;pointer-events:none}
+.hero-vignette{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.0) 50%,rgba(0,0,0,.75) 85%,#000 100%),
+    radial-gradient(ellipse 30% 50% at 0% 50%,rgba(0,0,0,.4) 0%,transparent 100%),
+    radial-gradient(ellipse 30% 50% at 100% 50%,rgba(0,0,0,.4) 0%,transparent 100%);
+}
+
+/* Giant name */
+.hero-name{
+  font-family:var(--font-display);
+  font-size:clamp(72px,18vw,240px);
+  font-weight:400;line-height:1;
+  color:rgba(255,255,255,.97);
+  letter-spacing:.02em;
+  white-space:nowrap;
+  text-align:center;
+  -webkit-text-stroke:1px rgba(255,255,255,.05);
+}
+.hero-photo{
+  position:absolute;bottom:0;left:50%;
+  transform:translateX(-50%);
+  height:91vh;z-index:4;
+  pointer-events:none;
+  object-fit:contain;object-position:bottom center;
+  -webkit-mask-image:linear-gradient(to bottom,black 55%,rgba(0,0,0,.0) 100%);
+  mask-image:linear-gradient(to bottom,black 55%,rgba(0,0,0,.0) 100%);
+  filter:brightness(1.05) contrast(1.03);
+  will-change:auto;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+.hero-photo-glow{
+  position:absolute;top:0;left:50%;
+  transform:translateX(-50%);
+  width:60vw;height:60vh;z-index:3;
+  pointer-events:none;
+  background:radial-gradient(ellipse 70% 70% at 50% 10%,rgba(255,107,0,.35) 0%,transparent 70%);
+  filter:blur(50px);
+}
+.hero-name-wrap{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-55%);
+  z-index:3;
+  display:flex;flex-direction:column;align-items:center;
+  pointer-events:none;user-select:none;
+}
+.hero-hi{
+  font-size:15px;font-weight:400;
+  color:rgba(255,255,255,.75);
+  letter-spacing:.05em;
+  font-family:var(--font-body);
+  white-space:nowrap;
+  margin-bottom:4px;
+  align-self:flex-start;
+  padding-left:6px;
+}
+.hero-fg{position:absolute;inset:0;z-index:6;pointer-events:none}
+
+/* Bottom-left block */
+.hero-left{
+  position:absolute;bottom:80px;left:52px;
+  max-width:360px;pointer-events:all;
+}
+.h-trust{
+  display:flex;align-items:center;gap:7px;
+  font-size:11.5px;font-weight:600;
+  color:var(--orange);margin-bottom:14px;
+  letter-spacing:.06em;font-family:var(--font-body);
+  text-transform:uppercase;
+}
+.h-trust::before{content:'✦';font-size:9px}
+.h-headline{
+  font-family:var(--font-head);
+  font-size:clamp(26px,3.4vw,46px);
+  font-weight:800;line-height:1.05;
+  color:var(--white);margin-bottom:28px;
+  letter-spacing:-.025em;
+}
+.h-btns{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn-p{
+  background:var(--orange);color:var(--white);
+  font-size:14px;font-weight:600;font-family:var(--font-body);
+  padding:13px 24px;border-radius:100px;
+  text-decoration:none;display:flex;align-items:center;gap:10px;
+  letter-spacing:.02em;border:none;cursor:pointer;
+  transition:all .22s;
+  box-shadow:0 4px 20px rgba(255,107,0,.3);
+}
+.btn-p:hover{background:var(--orange2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,107,0,.45)}
+.btn-p .bi{width:26px;height:26px;background:rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px}
+.btn-g{
+  color:rgba(255,255,255,.78);
+  font-size:14px;font-weight:500;font-family:var(--font-body);
+  text-decoration:none;display:flex;align-items:center;gap:6px;
+  letter-spacing:.02em;cursor:pointer;white-space:nowrap;
+  transition:color .2s;
+}
+.btn-g:hover{color:var(--white)}
+
+/* Bottom-right card */
+.hero-card{
+  position:absolute;bottom:80px;right:52px;
+  background:rgba(8,2,0,.78);
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;padding:18px 20px;width:272px;
+  pointer-events:all;
+}
+.card-avs{display:flex;margin-bottom:10px}
+.av{
+  width:30px;height:30px;border-radius:50%;
+  border:2px solid rgba(8,2,0,.9);
+  margin-right:-8px;overflow:hidden;
+  font-size:9px;display:flex;align-items:center;justify-content:center;
+  color:rgba(255,220,200,.9);font-weight:700;font-family:var(--font-body);
+}
+.av1{background:#7a3200}.av2{background:#552200}.av3{background:#8b1400}.av4{background:#3d1200}.av5{background:#b84200}
+.card-txt{font-size:12.5px;line-height:1.55;color:rgba(255,255,255,.82);margin-bottom:12px;font-family:var(--font-body);}
+.card-txt strong{color:var(--white);font-weight:600}
+.card-acts{display:flex;gap:8px}
+.cbtn{
+  font-size:11px;font-weight:600;font-family:var(--font-body);
+  padding:7px 14px;border-radius:100px;
+  text-decoration:none;letter-spacing:.03em;
+  cursor:pointer;border:none;transition:all .2s;
+}
+.cbtn-p{background:var(--orange);color:var(--white)}
+.cbtn-p:hover{background:var(--orange2)}
+.cbtn-s{background:rgba(255,255,255,.1);color:rgba(255,255,255,.6)}
+.cbtn-s:hover{background:rgba(255,255,255,.17);color:var(--white)}
+
+/* ─── TICKER ─── */
+.ticker{
+  position:absolute;bottom:0;left:0;right:0;z-index:7;
+  background:#000000;
+  border-top:1px solid rgba(255,255,255,.07);
+  padding:13px 0;overflow:hidden;
+}
+.ticker-inner{display:flex;gap:0;animation:tick 26s linear infinite;width:max-content}
+.t-item{
+  display:flex;align-items:center;gap:24px;padding:0 38px;
+  font-family:var(--font-head);
+  font-size:clamp(14px,2vw,30px);
+  font-weight:900;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.94);white-space:nowrap;
+}
+.t-dot{width:10px;height:10px;background:var(--orange);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);display:inline-block;flex-shrink:0;}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ─── SECTIONS ─── */
+section{position:relative;z-index:10}
+.section-label{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:12px;font-family:var(--font-body)}
+.section-title{font-family:var(--font-head);font-size:clamp(42px,6vw,80px);font-weight:900;line-height:.9;letter-spacing:-.03em;color:var(--white);margin-bottom:24px}
+
+/* ─── ABOUT ─── */
+.about-sec{padding:120px 52px;background:#000}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;max-width:1200px;margin:0 auto}
+.about-txt{font-size:16px;line-height:1.75;color:rgba(255,255,255,.68);margin-bottom:40px;font-family:var(--font-body)}
+.stats-row{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,255,255,.07);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.07)}
+.stat-box{padding:24px;background:rgba(255,255,255,.025)}
+.stat-box:hover{background:rgba(255,107,0,.07)}
+.stat-num{font-family:var(--font-display);font-size:48px;font-weight:400;line-height:1;color:var(--orange);margin-bottom:6px;letter-spacing:.03em}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,.6);letter-spacing:.08em;text-transform:uppercase;font-family:var(--font-body);font-weight:600}
+
+/* Tech chips */
+.tech-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.tech-chip{
+  display:flex;align-items:center;gap:7px;
+  padding:8px 16px;border-radius:100px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  font-size:13px;font-weight:500;color:rgba(255,255,255,.8);
+  font-family:var(--font-body);letter-spacing:.02em;
+  transition:all .2s;
+}
+.tech-chip:hover{background:rgba(255,107,0,.12);border-color:rgba(255,107,0,.3);color:var(--white)}
+.tc-dot{width:6px;height:6px;background:var(--orange);border-radius:50%;flex-shrink:0}
+
+/* ─── SERVICES ─── */
+.svc-sec{padding:120px 52px;background:#000}
+.svc-sec-inner{max-width:1200px;margin:0 auto}
+.svc-sec-head{margin-bottom:60px}
+.svc-sub{font-size:18px;color:rgba(255,255,255,.6);margin-top:16px;font-family:var(--font-body)}
+.svc-cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.svc-card{
+  position:relative;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;padding:32px 28px;
+  transition:all .35s ease;overflow:hidden;
+  cursor:pointer;
+}
+.svc-card::before{
+  content:'';position:absolute;inset:0;border-radius:20px;
+  background:radial-gradient(ellipse 80% 60% at 50% 110%,rgba(255,107,0,.1) 0%,transparent 70%);
+  opacity:0;transition:opacity .35s;
+}
+.svc-card:hover{border-color:rgba(255,107,0,.25);transform:translateY(-4px);background:rgba(255,107,0,.04)}
+.svc-card:hover::before{opacity:1}
+.svc-card-wide{grid-column:span 2}
+.svc-card-cta{
+  background:radial-gradient(ellipse 100% 100% at 50% 100%,rgba(255,107,0,.15) 0%,transparent 70%),rgba(255,107,0,.06);
+  border-color:rgba(255,107,0,.2);
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
+}
+.svc-card-num{font-family:var(--font-display);font-size:42px;font-weight:400;color:rgba(255,107,0,.35);line-height:1;margin-bottom:14px;letter-spacing:.05em}
+.svc-card-icon{
+  width:46px;height:46px;
+  background:rgba(255,107,0,.12);border:1px solid rgba(255,107,0,.25);
+  border-radius:12px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:22px;
+}
+.svc-card-icon svg{width:22px;height:22px;stroke:var(--orange)}
+.svc-card-title{font-family:var(--font-display);font-size:clamp(17px,1.6vw,22px);font-weight:400;color:#ffffff;margin-bottom:14px;letter-spacing:.06em;text-transform:uppercase;line-height:1.15}
+.svc-card-desc{font-size:14px;color:rgba(255,255,255,.62);line-height:1.7;font-family:var(--font-body);margin-bottom:22px;font-weight:400}
+.svc-card-tags{display:flex;flex-wrap:wrap;gap:7px}
+.svc-card-tags span{font-size:11.5px;font-weight:600;padding:5px 13px;border-radius:100px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.65);font-family:var(--font-body);letter-spacing:.04em;border:1px solid rgba(255,255,255,.09)}
+.svc-card-arrow{position:absolute;top:28px;right:28px;width:36px;height:36px;border-radius:50%;background:rgba(255,107,0,.1);border:1px solid rgba(255,107,0,.2);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--orange);transition:all .25s}
+.svc-card:hover .svc-card-arrow{background:var(--orange);color:var(--white);transform:rotate(45deg)}
+.svc-cta-txt{font-size:18px;font-weight:600;color:rgba(255,255,255,.85);line-height:1.4;font-family:var(--font-head);letter-spacing:-.01em}
+
+/* ─── PROJECTS ─── */
+.proj-sec{padding:120px 52px;background:#000}
+.proj-inner{max-width:1200px;margin:0 auto}
+.proj-head{margin-bottom:60px}
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.proj-card{
+  position:relative;border-radius:20px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  padding:40px 36px;min-height:280px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  cursor:pointer;transition:all .35s ease;
+}
+.proj-card-big{min-height:340px}
+.proj-card-bg{position:absolute;inset:0;z-index:0;transition:transform .5s ease}
+.proj-card:hover .proj-card-bg{transform:scale(1.04)}
+.proj-card::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.3) 60%,transparent 100%)}
+.proj-card:hover{border-color:rgba(255,107,0,.3);transform:translateY(-3px);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.proj-tag{position:absolute;top:24px;left:36px;z-index:2;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);font-family:var(--font-body);background:rgba(255,107,0,.12);border:1px solid rgba(255,107,0,.2);padding:5px 13px;border-radius:100px}
+.proj-content{position:relative;z-index:2}
+.proj-title{font-family:var(--font-display);font-size:clamp(20px,2vw,28px);font-weight:400;color:#fff;margin-bottom:10px;letter-spacing:.04em;text-transform:uppercase;line-height:1.1}
+.proj-desc{font-size:13.5px;color:rgba(255,255,255,.55);line-height:1.6;font-family:var(--font-body);margin-bottom:16px}
+.proj-tech{display:flex;flex-wrap:wrap;gap:6px}
+.proj-tech span{font-size:11px;font-weight:600;padding:4px 11px;border-radius:100px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);font-family:var(--font-body)}
+.proj-num{position:absolute;top:20px;right:28px;z-index:2;font-family:var(--font-display);font-size:80px;font-weight:400;color:rgba(255,255,255,.04);line-height:1;letter-spacing:.05em;pointer-events:none}
+.proj-link{position:absolute;bottom:28px;right:28px;z-index:3;font-size:12px;font-weight:600;color:var(--orange);font-family:var(--font-body);letter-spacing:.04em;text-decoration:none;background:rgba(255,107,0,.1);border:1px solid rgba(255,107,0,.2);padding:7px 16px;border-radius:100px;transition:all .22s}
+.proj-link:hover{background:var(--orange);color:var(--white)}
+
+/* ─── TESTIMONIALS ─── */
+.testi-sec{padding:120px 52px;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(255,107,0,.06) 0%,transparent 60%),#000}
+.testi-inner{max-width:1200px;margin:0 auto}
+.testi-head{margin-bottom:50px}
+.testi-rating{display:flex;align-items:center;gap:12px;margin-top:20px}
+.stars{color:var(--orange);font-size:20px;letter-spacing:2px}
+.rating-txt{font-size:14px;color:rgba(255,255,255,.45);font-family:var(--font-body)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.testi-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:32px 28px;position:relative;transition:all .3s ease;cursor:pointer}
+.testi-card-big{grid-column:span 2}
+.testi-card:hover{border-color:rgba(255,107,0,.2);background:rgba(255,107,0,.04);transform:translateY(-3px)}
+.testi-quote{font-family:var(--font-display);font-size:72px;font-weight:400;color:rgba(255,107,0,.25);line-height:.8;margin-bottom:16px}
+.testi-txt{font-size:15px;line-height:1.75;color:rgba(255,255,255,.78);font-family:var(--font-body);margin-bottom:24px;font-style:italic;font-weight:400}
+.testi-card-big .testi-txt{font-size:17px}
+.testi-person{display:flex;align-items:center;gap:14px}
+.testi-av{width:42px;height:42px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:rgba(255,255,255,.9);font-family:var(--font-body)}
+.testi-name{font-size:14px;font-weight:700;color:#fff;font-family:var(--font-body);letter-spacing:.01em}
+.testi-role{font-size:12px;color:rgba(255,255,255,.4);font-family:var(--font-body);margin-top:2px}
+.testi-stars{color:var(--orange);font-size:13px;letter-spacing:1px;margin-left:auto;align-self:flex-start}
+
+/* ─── CONTACT ─── */
+.contact-sec{padding:120px 52px;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(180,50,0,.25) 0%,transparent 70%),#000}
+.contact-in{max-width:960px;margin:0 auto;text-align:center}
+.contact-ttl{font-family:var(--font-head);font-size:clamp(52px,9vw,120px);font-weight:900;line-height:.9;letter-spacing:-.04em;color:var(--white);margin-bottom:16px}
+.contact-sub{font-size:18px;color:rgba(255,255,255,.45);margin-bottom:60px;font-family:var(--font-body)}
+.c-links{display:flex;justify-content:center;flex-wrap:wrap;gap:14px}
+.c-link{display:flex;align-items:center;gap:10px;padding:14px 28px;border-radius:100px;font-size:14px;font-weight:600;text-decoration:none;letter-spacing:.04em;transition:all .2s;cursor:pointer;font-family:var(--font-body)}
+.c-link.email{background:var(--orange);color:var(--white);border:1px solid transparent}
+.c-link.email:hover{background:var(--orange2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,107,0,.35)}
+.c-link.soc{background:rgba(255,255,255,.05);color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.09)}
+.c-link.soc:hover{background:rgba(255,107,0,.12);border-color:rgba(255,107,0,.35);color:var(--white);transform:translateY(-2px)}
+.c-link svg{width:17px;height:17px;flex-shrink:0}
+
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,107,0,.25),transparent);margin:0 52px}
+
+footer{border-top:1px solid rgba(255,255,255,.05);padding:26px 52px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:rgba(255,255,255,.28);font-family:var(--font-body)}
+footer a{color:rgba(255,107,0,.65);text-decoration:none}
+footer a:hover{color:var(--orange)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.on{opacity:1;transform:translateY(0)}
+
+/* ════════════════════════════════════════════════
+   RESPONSIVE — TABLET (≤1024px)
+════════════════════════════════════════════════ */
+@media(max-width:1024px){
+  nav{padding:18px 32px}
+  .hero-name{font-size:clamp(70px,12vw,140px)}
+  .hero-photo{height:75vh}
+  .hero-left{left:32px;max-width:300px}
+  .hero-card{width:240px;right:32px}
+  .about-sec,.svc-sec,.proj-sec,.testi-sec,.contact-sec{padding:90px 32px}
+  .divider{margin:0 32px}
+  footer{padding:24px 32px}
+  .svc-cards-grid{grid-template-columns:repeat(2,1fr)}
+  .svc-card-wide{grid-column:span 2}
+}
+
+/* ════════════════════════════════════════════════
+   RESPONSIVE — MOBILE (≤768px)
+════════════════════════════════════════════════ */
+@media(max-width:768px){
+  /* Nav */
+  nav{padding:16px 20px}
+  .nav-pill{display:none}
+  .nav-cta{display:none}
+  .nav-hamburger{display:flex}
+
+  /* ── HERO: full-screen with photo filling background ── */
+  .hero{
+    min-height:100svh;
+    display:flex;flex-direction:column;
+    position:relative;overflow:hidden;
+  }
+
+  /* Big name — centered, very top area, behind photo */
+  .hero-name-wrap{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-58%);
+    z-index:3;
+    width:100%;text-align:center;
+    pointer-events:none;
+  }
+  .hero-hi{
+    font-size:14px;
+    color:rgba(255,255,255,.82);
+    display:block;text-align:left;
+    padding-left:24px;
+    margin-bottom:2px;
+    letter-spacing:.04em;
+  }
+  .hero-name{
+    font-size:clamp(70px,20vw,110px);
+    letter-spacing:.03em;
+    text-align:center;
+    line-height:.95;
+  }
+
+  /* Photo — tall, centered, fills most of screen */
+  .hero-photo{
+    position:absolute;
+    bottom:160px;
+    left:50%;
+    transform:translateX(-50%);
+    height:72svh;
+    max-height:520px;
+    width:auto;
+    z-index:4;
+    display:block !important;
+    object-fit:contain;
+    object-position:bottom center;
+    -webkit-mask-image:linear-gradient(to bottom,black 55%,rgba(0,0,0,.0) 100%);
+    mask-image:linear-gradient(to bottom,black 55%,rgba(0,0,0,.0) 100%);
+  }
+
+  /* Bottom info block — stacked below photo */
+  .hero-fg{
+    position:absolute;
+    bottom:0;left:0;right:0;
+    z-index:8;
+    padding:0 22px 24px;
+    display:flex;flex-direction:column;gap:0;
+    background:linear-gradient(to top,rgba(0,0,0,.97) 0%,rgba(0,0,0,.88) 60%,transparent 100%);
+    padding-top:32px;
+  }
+
+  /* Trust badge + avatars row */
+  .hero-left{
+    position:relative;bottom:auto;left:auto;
+    max-width:100%;
+    display:flex;flex-direction:column;
+    align-items:flex-start;
+  }
+
+  /* Avatars row above trust text */
+  .card-avs{
+    display:flex;
+    margin-bottom:6px;
+  }
+  .av{
+    width:28px;height:28px;
+    font-size:8px;
+  }
+
+  /* Trust badge */
+  .h-trust{
+    font-size:11px;
+    margin-bottom:10px;
+    display:flex;align-items:center;gap:6px;
+  }
+  /* Show avatar row in hero-left area above trust text */
+  .hero-left-avatars{
+    display:flex;margin-bottom:6px;
+  }
+  .hero-left-avatars .av{
+    width:28px;height:28px;font-size:8px;
+    border:2px solid rgba(8,2,0,.9);
+    margin-right:-8px;border-radius:50%;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    color:rgba(255,220,200,.9);font-weight:700;
+  }
+
+  .h-headline{
+    font-size:clamp(24px,7vw,34px);
+    line-height:1.08;
+    margin-bottom:18px;
+    letter-spacing:-.015em;
+  }
+  .h-btns{gap:10px;flex-wrap:nowrap}
+  .btn-p{
+    font-size:14px;padding:13px 22px;
+    box-shadow:0 4px 24px rgba(255,107,0,.4);
+  }
+  .btn-g{display:none}
+
+  /* Hide the bottom right card on mobile — avatars shown above instead */
+  .hero-card{display:none}
+
+  /* Sections */
+  .about-sec,.svc-sec,.proj-sec,.testi-sec,.contact-sec{padding:60px 20px}
+  .divider{margin:0 20px}
+
+  /* About grid: single col */
+  .about-grid{grid-template-columns:1fr;gap:40px}
+  .section-title{font-size:clamp(38px,10vw,54px)!important}
+
+  /* Stats */
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .stat-num{font-size:38px}
+
+  /* Services */
+  .svc-cards-grid{grid-template-columns:1fr}
+  .svc-card-wide{grid-column:span 1}
+  .svc-card-cta{padding:28px 24px}
+
+  /* Projects: single col */
+  .proj-grid{grid-template-columns:1fr}
+  .proj-card,.proj-card-big{min-height:240px;padding:28px 24px}
+  .proj-tag{left:24px}
+  .proj-link{bottom:20px;right:20px}
+  .proj-num{font-size:60px;right:20px}
+
+  /* Testimonials: single col */
+  .testi-grid{grid-template-columns:1fr}
+  .testi-card-big{grid-column:span 1}
+  .testi-txt{font-size:14px}
+  .testi-card-big .testi-txt{font-size:15px}
+
+  /* Contact */
+  .contact-ttl{font-size:clamp(48px,12vw,72px)!important}
+  .contact-sub{font-size:16px;margin-bottom:40px}
+  .c-links{flex-direction:column;align-items:center}
+  .c-link{width:100%;max-width:320px;justify-content:center}
+  .c-link.email{font-size:13px;padding:13px 20px}
+
+  /* Footer */
+  footer{flex-direction:column;gap:8px;text-align:center;padding:22px 20px}
+}
+
+  /* Sections */
+  .about-sec,.svc-sec,.proj-sec,.testi-sec,.contact-sec{padding:60px 20px}
+  .divider{margin:0 20px}
+
+  /* About grid: single col */
+  .about-grid{grid-template-columns:1fr;gap:40px}
+  .section-title{font-size:clamp(38px,10vw,54px)!important}
+
+  /* Stats */
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .stat-num{font-size:38px}
+
+  /* Services */
+  .svc-cards-grid{grid-template-columns:1fr}
+  .svc-card-wide{grid-column:span 1}
+  .svc-card-cta{padding:28px 24px}
+
+  /* Projects: single col */
+  .proj-grid{grid-template-columns:1fr}
+  .proj-card,.proj-card-big{min-height:240px;padding:28px 24px}
+  .proj-tag{left:24px}
+  .proj-link{bottom:20px;right:20px}
+  .proj-num{font-size:60px;right:20px}
+
+  /* Testimonials: single col */
+  .testi-grid{grid-template-columns:1fr}
+  .testi-card-big{grid-column:span 1}
+  .testi-txt{font-size:14px}
+  .testi-card-big .testi-txt{font-size:15px}
+
+  /* Contact */
+  .contact-ttl{font-size:clamp(48px,12vw,72px)!important}
+  .contact-sub{font-size:16px;margin-bottom:40px}
+  .c-links{flex-direction:column;align-items:center}
+  .c-link{width:100%;max-width:320px;justify-content:center}
+  .c-link.email{font-size:13px;padding:13px 20px}
+
+  /* Footer */
+  footer{flex-direction:column;gap:8px;text-align:center;padding:22px 20px}
+}
+
+/* ════════════════════════════════════════════════
+   RESPONSIVE — SMALL MOBILE (≤480px)
+════════════════════════════════════════════════ */
+@media(max-width:480px){
+  nav{padding:12px 16px}
+  .nav-logo{font-size:11px;letter-spacing:.12em}
+
+  .hero-name{font-size:clamp(60px,18vw,90px)}
+  .hero-name-wrap{top:48%;transform:translate(-50%,-60%)}
+  .hero-photo{height:65svh;max-height:440px;bottom:145px;display:block !important}
+
+  .h-headline{font-size:clamp(22px,6vw,30px)}
+  .btn-p{font-size:13px;padding:12px 20px;gap:8px}
+  .btn-p .bi{width:22px;height:22px;font-size:11px}
+
+  .hero-card{padding:14px 16px;border-radius:14px}
+  .card-txt{font-size:11.5px}
+  .cbtn{font-size:10px;padding:6px 11px}
+
+  .stat-num{font-size:34px}
+  .stat-box{padding:18px}
+
+  .tech-chip{font-size:12px;padding:7px 13px}
+
+  .svc-card{padding:24px 20px}
+  .svc-card-title{font-size:16px}
+  .svc-card-desc{font-size:13px}
+
+  .proj-card,.proj-card-big{min-height:200px;padding:24px 18px}
+  .proj-title{font-size:18px}
+  .proj-desc{font-size:12.5px}
+  .proj-num{font-size:48px}
+
+  .testi-card{padding:24px 20px}
+  .testi-quote{font-size:56px}
+  .testi-txt{font-size:13.5px}
+
+  .section-title{font-size:clamp(34px,9vw,48px)!important}
+  .contact-ttl{font-size:clamp(42px,13vw,64px)!important}
+  .contact-sub{font-size:14px}
+
+  footer{font-size:11px}
+}
+
+/* ════════════════════════════════════════════════
+   RESPONSIVE — VERY SMALL (≤360px)
+════════════════════════════════════════════════ */
+@media(max-width:360px){
+  .hero-name{font-size:56px}
+  .hero-photo{height:60svh;max-height:380px;bottom:135px;display:block !important}
+  .h-headline{font-size:20px}
+  .btn-p,.btn-g{font-size:12px}
+  .stat-num{font-size:30px}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curR"></div>
+
+<!-- Mobile Nav Drawer -->
+<div class="nav-drawer" id="navDrawer">
+  <a href="#about" onclick="closeDrawer()">About</a>
+  <a href="#services" onclick="closeDrawer()">Services</a>
+  <a href="#projects" onclick="closeDrawer()">Projects</a>
+  <a href="#testimonials" onclick="closeDrawer()">Reviews</a>
+  <a href="#contact" onclick="closeDrawer()">Contact</a>
+  <a href="mailto:hadimehthash.web@gmail.com" class="nav-cta" onclick="closeDrawer()">
+    Start a Project <span class="arr">↗</span>
+  </a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">HADI MEHTHASH</a>
+  <div class="nav-pill">
+    <a href="#about" class="active">About</a>
+    <a href="#services">Services</a>
+    <a href="#projects">Projects</a>
+    <a href="#testimonials">Reviews</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="mailto:hadimehthash.web@gmail.com" class="nav-cta">
+    Start a Project <span class="arr">↗</span>
+  </a>
+  <div class="nav-hamburger" id="hamburger" onclick="toggleDrawer()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <canvas id="noise"></canvas>
+  <div class="hero-vignette"></div>
+  <div class="hero-name-wrap" aria-hidden="true">
+    <span class="hero-hi">Hi, I am</span>
+    <div class="hero-name">Mehthash</div>
+  </div>
+  <div class="hero-photo-glow"></div>
+  <img src="hadimehthash-removebg-preview.png" alt="Mehthash" class="hero-photo" onerror="this.style.display='none'">
+  <div class="hero-fg">
+    <!-- Bottom left -->
+    <div class="hero-left">
+      <div class="hero-left-avatars">
+        <div class="av av1" style="width:28px;height:28px;font-size:8px;border:2px solid rgba(8,2,0,.9);border-radius:50%;margin-right:-8px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:rgba(255,220,200,.9);font-weight:700;">AH</div>
+        <div class="av av2" style="width:28px;height:28px;font-size:8px;border:2px solid rgba(8,2,0,.9);border-radius:50%;margin-right:-8px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:rgba(255,220,200,.9);font-weight:700;">SR</div>
+        <div class="av av3" style="width:28px;height:28px;font-size:8px;border:2px solid rgba(8,2,0,.9);border-radius:50%;margin-right:-8px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:rgba(255,220,200,.9);font-weight:700;">MK</div>
+        <div class="av av4" style="width:28px;height:28px;font-size:8px;border:2px solid rgba(8,2,0,.9);border-radius:50%;margin-right:-8px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:rgba(255,220,200,.9);font-weight:700;">PJ</div>
+        <div class="av av5" style="width:28px;height:28px;font-size:9px;border:2px solid rgba(8,2,0,.9);border-radius:50%;margin-right:0;overflow:hidden;display:flex;align-items:center;justify-content:center;color:rgba(255,220,200,.9);font-weight:700;background:#ff6b00;">↗</div>
+      </div>
+      <div class="h-trust">Trusted by 200+ clients</div>
+      <h1 class="h-headline">Websites that turn<br>visitors into clients</h1>
+      <div class="h-btns">
+        <a href="mailto:hadimehthash.web@gmail.com" class="btn-p">
+          Start a Project <span class="bi">↗</span>
+        </a>
+        <a href="#services" class="btn-g">View My Work &nbsp;↓</a>
+      </div>
+    </div>
+    <!-- Bottom right card -->
+    <div class="hero-card">
+      <div class="card-avs">
+        <div class="av av1">AH</div>
+        <div class="av av2">SR</div>
+        <div class="av av3">MK</div>
+        <div class="av av4">PJ</div>
+        <div class="av av5">+</div>
+      </div>
+      <p class="card-txt"><strong>99.6% Of My Clients Are Satisfied</strong><br>— Be One Of Them Today.</p>
+      <div class="card-acts">
+        <a href="mailto:hadimehthash.web@gmail.com" class="cbtn cbtn-p">Free Consultation</a>
+        <span class="cbtn cbtn-s">24h Response</span>
+      </div>
+    </div>
+  </div>
+  <!-- Ticker -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <div class="t-item">6 Years Experience <span class="t-dot"></span></div>
+      <div class="t-item">299+ Deliveries <span class="t-dot"></span></div>
+      <div class="t-item">99% Positive Reviews <span class="t-dot"></span></div>
+      <div class="t-item">Full Stack Developer <span class="t-dot"></span></div>
+      <div class="t-item">6 Years Experience <span class="t-dot"></span></div>
+      <div class="t-item">299+ Deliveries <span class="t-dot"></span></div>
+      <div class="t-item">99% Positive Reviews <span class="t-dot"></span></div>
+      <div class="t-item">Full Stack Developer <span class="t-dot"></span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section class="about-sec" id="about">
+  <div class="about-grid">
+    <div class="reveal">
+      <div class="section-label">About Me</div>
+      <h2 class="section-title">Hi, I am<br>Mehthash</h2>
+      <p class="about-txt">I'm a student full stack developer based in Kozhikode, Kerala. I build real, functional web products — from school management systems to startup websites and AI-powered tools. Every project I take on is built to perform, not just look good.</p>
+      <div class="stats-row">
+        <div class="stat-box"><div class="stat-num">2+</div><div class="stat-lbl">Years Experience</div></div>
+        <div class="stat-box"><div class="stat-num">99%</div><div class="stat-lbl">Client Satisfaction</div></div>
+        <div class="stat-box"><div class="stat-num">24h</div><div class="stat-lbl">Response Time</div></div>
+        <div class="stat-box"><div class="stat-num">50+</div><div class="stat-lbl">Projects Done</div></div>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:.14s">
+      <div class="section-label">Tech Stack</div>
+      <h2 class="section-title" style="font-size:clamp(36px,4.5vw,46px);margin-bottom:26px">Tools I Use</h2>
+      <div class="tech-grid">
+        <div class="tech-chip"><span class="tc-dot"></span>React</div>
+        <div class="tech-chip"><span class="tc-dot"></span>Next.js</div>
+        <div class="tech-chip"><span class="tc-dot"></span>Node.js</div>
+        <div class="tech-chip"><span class="tc-dot"></span>Python</div>
+        <div class="tech-chip"><span class="tc-dot"></span>MongoDB</div>
+        <div class="tech-chip"><span class="tc-dot"></span>PostgreSQL</div>
+        <div class="tech-chip"><span class="tc-dot"></span>Tailwind CSS</div>
+        <div class="tech-chip"><span class="tc-dot"></span>Figma</div>
+        <div class="tech-chip"><span class="tc-dot"></span>Firebase</div>
+        <div class="tech-chip"><span class="tc-dot"></span>Docker</div>
+        <div class="tech-chip"><span class="tc-dot"></span>AWS</div>
+        <div class="tech-chip"><span class="tc-dot"></span>Git</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section class="svc-sec" id="services">
+  <div class="svc-sec-inner">
+    <div class="svc-sec-head reveal">
+      <div class="section-label">What I Do</div>
+      <h2 class="section-title" style="font-size:clamp(44px,6vw,82px)">Services That<br>Deliver Results</h2>
+      <p class="svc-sub">Every service is crafted to help you grow — not just look good online.</p>
+    </div>
+    <div class="svc-cards-grid">
+      <div class="svc-card reveal">
+        <div class="svc-card-num">01</div>
+        <div class="svc-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <h3 class="svc-card-title">Full Stack Web Development</h3>
+        <p class="svc-card-desc">End-to-end web applications built with React, Next.js, and Node.js. Scalable, fast, and production-ready from day one.</p>
+        <div class="svc-card-tags"><span>React</span><span>Node.js</span><span>MongoDB</span></div>
+        <div class="svc-card-arrow">↗</div>
+      </div>
+      <div class="svc-card reveal" style="transition-delay:.1s">
+        <div class="svc-card-num">02</div>
+        <div class="svc-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3 class="svc-card-title">School & Management Systems</h3>
+        <p class="svc-card-desc">Custom internal platforms built for institutions — student records, attendance tracking, fee management, and admin dashboards.</p>
+        <div class="svc-card-tags"><span>Custom ERP</span><span>Dashboard</span><span>Admin Panel</span></div>
+        <div class="svc-card-arrow">↗</div>
+      </div>
+      <div class="svc-card reveal" style="transition-delay:.2s">
+        <div class="svc-card-num">03</div>
+        <div class="svc-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <h3 class="svc-card-title">Automation & Integrations</h3>
+        <p class="svc-card-desc">Connect your tools, eliminate repetitive tasks, and build workflows that run on autopilot — saving hours every week.</p>
+        <div class="svc-card-tags"><span>APIs</span><span>Zapier</span><span>Python Scripts</span></div>
+        <div class="svc-card-arrow">↗</div>
+      </div>
+      <div class="svc-card reveal" style="transition-delay:.3s">
+        <div class="svc-card-num">04</div>
+        <div class="svc-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+        </div>
+        <h3 class="svc-card-title">Landing Pages & Portfolios</h3>
+        <p class="svc-card-desc">High-converting, visually striking pages that turn visitors into paying clients. Built for startups, freelancers, and personal brands.</p>
+        <div class="svc-card-tags"><span>UI/UX</span><span>Conversion</span><span>Branding</span></div>
+        <div class="svc-card-arrow">↗</div>
+      </div>
+      <div class="svc-card svc-card-wide reveal" style="transition-delay:.35s">
+        <div class="svc-card-num">05</div>
+        <div class="svc-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 8v4l3 3"/><path d="M18 2v4h4"/></svg>
+        </div>
+        <h3 class="svc-card-title">AI-Powered Web Tools</h3>
+        <p class="svc-card-desc">Integrate cutting-edge AI into your product — chatbots, content generators, recommendation engines, and smart automation that actually works.</p>
+        <div class="svc-card-tags"><span>OpenAI</span><span>Gemini</span><span>LangChain</span><span>RAG</span></div>
+        <div class="svc-card-arrow">↗</div>
+      </div>
+      <div class="svc-card svc-card-cta reveal" style="transition-delay:.4s">
+        <p class="svc-cta-txt">Have a project in mind? Let's build something amazing together.</p>
+        <a href="mailto:hadimehthash.web@gmail.com" class="btn-p" style="margin-top:20px;display:inline-flex">Start a Project <span class="bi">↗</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section class="proj-sec" id="projects">
+  <div class="proj-inner">
+    <div class="proj-head reveal">
+      <div class="section-label">Selected Work</div>
+      <h2 class="section-title" style="font-size:clamp(44px,6vw,82px)">Projects That<br>Made Impact</h2>
+    </div>
+    <div class="proj-grid">
+      <div class="proj-card proj-card-big reveal">
+        <div class="proj-card-bg" style="background:linear-gradient(135deg,#1a0800 0%,#3d1500 50%,#0d0500 100%)"></div>
+        <div class="proj-tag">Full Stack</div>
+        <div class="proj-content">
+          <h3 class="proj-title">School Management System</h3>
+          <p class="proj-desc">Complete ERP for educational institutions — student records, attendance, fees, and staff management in one platform.</p>
+          <div class="proj-tech"><span>React</span><span>Node.js</span><span>MongoDB</span><span>Express</span></div>
+        </div>
+        <div class="proj-num">01</div>
+        <a href="#" class="proj-link">View Project ↗</a>
+      </div>
+      <div class="proj-card reveal" style="transition-delay:.1s">
+        <div class="proj-card-bg" style="background:linear-gradient(135deg,#000d1a 0%,#001a33 50%,#000a14 100%)"></div>
+        <div class="proj-tag">Web App</div>
+        <div class="proj-content">
+          <h3 class="proj-title">AI Content Generator</h3>
+          <p class="proj-desc">GPT-powered tool that writes marketing copy, blogs, and social posts in seconds.</p>
+          <div class="proj-tech"><span>Next.js</span><span>OpenAI</span><span>Tailwind</span></div>
+        </div>
+        <div class="proj-num">02</div>
+        <a href="#" class="proj-link">View Project ↗</a>
+      </div>
+      <div class="proj-card reveal" style="transition-delay:.2s">
+        <div class="proj-card-bg" style="background:linear-gradient(135deg,#0a0a00 0%,#1a1a00 50%,#0d0d00 100%)"></div>
+        <div class="proj-tag">E-Commerce</div>
+        <div class="proj-content">
+          <h3 class="proj-title">Startup E-Shop</h3>
+          <p class="proj-desc">Full e-commerce platform with payments, inventory, and analytics dashboard for a Kerala-based startup.</p>
+          <div class="proj-tech"><span>React</span><span>Stripe</span><span>Firebase</span></div>
+        </div>
+        <div class="proj-num">03</div>
+        <a href="#" class="proj-link">View Project ↗</a>
+      </div>
+      <div class="proj-card reveal" style="transition-delay:.3s">
+        <div class="proj-card-bg" style="background:linear-gradient(135deg,#0a0014 0%,#14002a 50%,#080010 100%)"></div>
+        <div class="proj-tag">Automation</div>
+        <div class="proj-content">
+          <h3 class="proj-title">Business Workflow Bot</h3>
+          <p class="proj-desc">WhatsApp + email automation system that handles lead follow-ups and customer support 24/7.</p>
+          <div class="proj-tech"><span>Python</span><span>Twilio</span><span>FastAPI</span></div>
+        </div>
+        <div class="proj-num">04</div>
+        <a href="#" class="proj-link">View Project ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIALS -->
+<section class="testi-sec" id="testimonials">
+  <div class="testi-inner">
+    <div class="testi-head reveal">
+      <div class="section-label">Client Reviews</div>
+      <h2 class="section-title" style="font-size:clamp(44px,6vw,82px)">What Clients<br>Say About Me</h2>
+      <div class="testi-rating">
+        <span class="stars">★★★★★</span>
+        <span class="rating-txt">4.9 / 5 · 200+ happy clients</span>
+      </div>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card testi-card-big reveal">
+        <div class="testi-quote">"</div>
+        <p class="testi-txt">Hadi built our entire school management system from scratch in under 6 weeks. The attention to detail, speed of delivery, and quality of code is unlike anything I've seen from a developer at this level. Absolutely world-class work.</p>
+        <div class="testi-person">
+          <div class="testi-av" style="background:#7a3200">SA</div>
+          <div>
+            <div class="testi-name">Sulaiman Al-Amin</div>
+            <div class="testi-role">Principal, Al-Noor Academy</div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:.1s">
+        <div class="testi-quote">"</div>
+        <p class="testi-txt">Our landing page conversion rate went up 340% after Hadi redesigned it. He doesn't just code — he thinks about business results.</p>
+        <div class="testi-person">
+          <div class="testi-av" style="background:#004d40">RK</div>
+          <div>
+            <div class="testi-name">Rahul Krishnan</div>
+            <div class="testi-role">Founder, GrowthLab</div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:.2s">
+        <div class="testi-quote">"</div>
+        <p class="testi-txt">Fast, reliable, and incredibly talented. Delivered our e-commerce site with zero bugs and ahead of schedule. Will definitely hire again.</p>
+        <div class="testi-person">
+          <div class="testi-av" style="background:#1a237e">PM</div>
+          <div>
+            <div class="testi-name">Priya Menon</div>
+            <div class="testi-role">CEO, StyleNest Kerala</div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:.3s">
+        <div class="testi-quote">"</div>
+        <p class="testi-txt">The automation system Hadi built saves our team 20+ hours per week. The ROI was immediate. Best investment we've made this year.</p>
+        <div class="testi-person">
+          <div class="testi-av" style="background:#880e4f">NF</div>
+          <div>
+            <div class="testi-name">Nadia Farooq</div>
+            <div class="testi-role">Operations Head, SwiftCo</div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:.4s">
+        <div class="testi-quote">"</div>
+        <p class="testi-txt">Professional, communicative, and delivers exactly what he promises. The AI chatbot he integrated completely transformed our customer support flow.</p>
+        <div class="testi-person">
+          <div class="testi-av" style="background:#33691e">AR</div>
+          <div>
+            <div class="testi-name">Ahmed Raza</div>
+            <div class="testi-role">CTO, TechNest Solutions</div>
+          </div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section class="contact-sec" id="contact">
+  <div class="contact-in reveal">
+    <div class="section-label">Let's Work Together</div>
+    <h2 class="contact-ttl">Start a<br>Project</h2>
+    <p class="contact-sub">Got an idea? Let's turn it into something real.<br>Free consultation · 24h response guaranteed.</p>
+    <div class="c-links">
+      <a href="mailto:hadimehthash.web@gmail.com" class="c-link email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        hadimehthash.web@gmail.com
+      </a>
+      <a href="https://www.linkedin.com/in/abdul-hadi-mehthash-b27861389/" class="c-link soc" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/abdulhadimehthash" class="c-link soc" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+      <a href="https://www.instagram.com/hadi.mehthashh/" class="c-link soc" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Hadi Mehthash · Kozhikode, Kerala</span>
+  <span>Built with care &amp; caffeine ☕</span>
+</footer>
+
+<script>
+/* ── Mobile nav drawer ── */
+function toggleDrawer(){
+  const d=document.getElementById('navDrawer');
+  const h=document.getElementById('hamburger');
+  d.style.display=d.style.display==='flex'?'none':'flex';
+  setTimeout(()=>d.classList.toggle('open'),10);
+  h.classList.toggle('open');
+  document.body.style.overflow=d.classList.contains('open')?'hidden':'';
+}
+function closeDrawer(){
+  const d=document.getElementById('navDrawer');
+  const h=document.getElementById('hamburger');
+  d.classList.remove('open');
+  h.classList.remove('open');
+  document.body.style.overflow='';
+  setTimeout(()=>{if(!d.classList.contains('open'))d.style.display='none';},300);
+}
+// Init drawer hidden
+document.getElementById('navDrawer').style.display='none';
+
+/* ── Grain noise ── */
+(function(){
+  const c=document.getElementById('noise');
+  if(!c)return;
+  const x=c.getContext('2d');
+  const SZ=90,AL=55,INT=1.0;
+  const pc=document.createElement('canvas');
+  pc.width=pc.height=SZ;
+  const px=pc.getContext('2d');
+  const pd=px.createImageData(SZ,SZ);
+  const pl=SZ*SZ*4;
+  let cW=0,cH=0;
+  function resize(){
+    const dpr=window.devicePixelRatio||1;
+    const par=c.parentElement;
+    const r=par?par.getBoundingClientRect():{width:innerWidth,height:innerHeight};
+    cW=r.width;cH=r.height;
+    c.width=cW*dpr;c.height=cH*dpr;
+    x.setTransform(dpr,0,0,dpr,0,0);
+    drawOnce();
+  }
+  function drawOnce(){
+    if(!cW||!cH)return;
+    for(let i=0;i<pl;i+=4){
+      const v=Math.random()*255*INT;
+      pd.data[i]=pd.data[i+1]=pd.data[i+2]=v;
+      pd.data[i+3]=AL;
+    }
+    px.putImageData(pd,0,0);
+    x.clearRect(0,0,cW,cH);
+    const pat=x.createPattern(pc,'repeat');
+    if(pat){x.fillStyle=pat;x.fillRect(0,0,cW,cH);}
+  }
+  window.addEventListener('resize',resize);
+  resize();
+})();
+
+/* ── Custom cursor (desktop only) ── */
+(function(){
+  if(window.matchMedia('(hover:none),(pointer:coarse)').matches)return;
+  const cur=document.getElementById('cur');
+  const ring=document.getElementById('curR');
+  if(!cur||!ring)return;
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+  (function tick(){
+    cur.style.left=mx+'px';cur.style.top=my+'px';
+    rx+=(mx-rx)*.13;ry+=(my-ry)*.13;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    requestAnimationFrame(tick);
+  })();
+  document.querySelectorAll('a,button,.svc,.svc-card,.proj-card,.testi-card').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cur.style.width=cur.style.height='18px';ring.style.width=ring.style.height='48px';});
+    el.addEventListener('mouseleave',()=>{cur.style.width=cur.style.height='10px';ring.style.width=ring.style.height='34px';});
+  });
+})();
+
+/* ── Scroll reveal ── */
+(function(){
+  const io=new IntersectionObserver(e=>e.forEach(i=>i.isIntersecting&&i.target.classList.add('on')),{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(r=>io.observe(r));
+})();
+
+/* ── Nav active ── */
+document.querySelectorAll('.nav-pill a').forEach(l=>l.addEventListener('click',function(){
+  document.querySelectorAll('.nav-pill a').forEach(x=>x.classList.remove('active'));
+  this.classList.add('active');
+}));
+
+/* ── Hero entry animations ── */
+(function(){
+  const els=[
+    {el:document.querySelector('.hero-name'),delay:0},
+    {el:document.querySelector('.hero-hi'),delay:200},
+    {el:document.querySelector('.hero-left'),delay:350},
+    {el:document.querySelector('.hero-card'),delay:500},
+  ];
+  els.forEach(({el,delay})=>{
+    if(!el)return;
+    el.style.opacity='0';
+    setTimeout(()=>{
+      el.style.transition='opacity .8s ease, transform .8s ease';
+      el.style.opacity='1';
+    },delay+100);
+  });
+})();
+
+/* ── Smooth scroll for all anchor links ── */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const target=document.querySelector(this.getAttribute('href'));
+    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>
