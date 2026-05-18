@@ -426,7 +426,7 @@ footer a:hover{color:var(--orange)}
   .nav-cta{display:none}
   .nav-hamburger{display:flex}
 
-  /* ════ HERO: True stacked layout — photo block on top, content below ════ */
+  /* ════ HERO MOBILE: Photo fills top, name overlaid lower half of photo, content below ════ */
   .hero{
     min-height:auto;
     display:flex;
@@ -435,84 +435,82 @@ footer a:hover{color:var(--orange)}
     overflow:hidden;
   }
 
-  /* Orange-to-dark radial BG */
   .hero-bg{
     background:radial-gradient(ellipse 160% 70% at 50% 0%,#ff6b00 0%,#d44500 15%,#7a1c00 35%,#200500 58%,#000 100%);
   }
 
-  /* Photo glow — top */
   .hero-photo-glow{
     top:0;left:0;right:0;
-    width:100%;height:40vh;
+    width:100%;height:55vw;
     transform:none;
-    background:radial-gradient(ellipse 90% 60% at 50% 0%,rgba(255,107,0,.5) 0%,transparent 70%);
+    background:radial-gradient(ellipse 90% 60% at 50% 0%,rgba(255,107,0,.45) 0%,transparent 70%);
     filter:blur(40px);
     z-index:1;
   }
 
-  /* Photo block — sits at top, normal flow, no absolute */
+  /* Photo — absolute, starts below nav (~56px), fills area */
   .hero-photo{
-    position:relative;
-    top:auto;bottom:auto;left:auto;
-    transform:none;
-    display:block !important;
-    width:80%;
-    max-width:320px;
-    height:auto;
+    position:absolute;
+    top:56px;
+    left:50%;
+    transform:translateX(-50%);
+    width:auto;
+    height:70vw;
     max-height:340px;
     object-fit:contain;
     object-position:top center;
-    z-index:4;
-    margin:60px auto 0;
-    -webkit-mask-image:linear-gradient(to bottom,black 60%,rgba(0,0,0,0) 100%);
-    mask-image:linear-gradient(to bottom,black 60%,rgba(0,0,0,0) 100%);
+    z-index:3;
+    display:block !important;
+    -webkit-mask-image:linear-gradient(to bottom,black 0%,black 55%,rgba(0,0,0,0) 100%);
+    mask-image:linear-gradient(to bottom,black 0%,black 55%,rgba(0,0,0,0) 100%);
     filter:brightness(1.05) contrast(1.03);
   }
 
-  /* "Hi, I am" + giant name — below photo, normal flow */
+  /* Name wrap — margin-top = nav height + photo height overlap point */
   .hero-name-wrap{
     position:relative;
     top:auto;left:auto;right:auto;
     transform:none;
     z-index:5;
     width:100%;
-    text-align:center;
-    padding:0 20px;
-    margin-top:-20px;
+    text-align:left;
+    padding:0 18px;
+    margin-top:calc(56px + 44vw);
     pointer-events:none;
     display:flex;
     flex-direction:column;
-    align-items:center;
+    align-items:flex-start;
   }
   .hero-hi{
-    font-size:15px;
-    color:rgba(255,255,255,.88);
+    font-size:14px;
+    color:rgba(255,255,255,.85);
     display:block;
-    margin-bottom:4px;
-    letter-spacing:.03em;
+    margin-bottom:0;
+    letter-spacing:.04em;
     font-style:italic;
     font-family:var(--font-body);
-    align-self:center;
   }
   .hero-name{
-    font-size:clamp(64px,20vw,100px);
+    font-size:clamp(56px,17vw,88px);
     letter-spacing:.02em;
-    text-align:center;
+    text-align:left;
     line-height:.9;
     white-space:nowrap;
     overflow:visible;
+    text-shadow:0 2px 20px rgba(0,0,0,.6);
   }
 
-  /* Foreground content — below name, normal flow */
+  /* Content block — directly below name, no gap */
   .hero-fg{
     position:relative;
     bottom:auto;left:auto;right:auto;
     z-index:6;
-    padding:28px 22px 40px;
+    padding:20px 22px 36px;
     display:flex;
     flex-direction:column;
     gap:0;
-    background:linear-gradient(to bottom,transparent 0%,#050100 30%);
+    margin-top:4px;
+    background:linear-gradient(to bottom,transparent 0%,#050100 28%);
   }
 
   /* Avatar row */
@@ -619,9 +617,9 @@ footer a:hover{color:var(--orange)}
   nav{padding:12px 16px}
   .nav-logo{font-size:11px;letter-spacing:.12em}
 
-  .hero-name{font-size:clamp(44px,14vw,72px)}
-  .hero-name-wrap{margin-top:-16px}
-  .hero-photo{width:72%;max-width:260px;max-height:280px;margin-top:55px}
+  .hero-name{font-size:clamp(44px,14vw,68px)}
+  .hero-name-wrap{margin-top:48vw}
+  .hero-photo{height:68vw;max-height:300px}
 
   .h-headline{font-size:clamp(20px,5.5vw,28px)}
   .btn-p{font-size:13px;padding:11px 18px;gap:8px}
@@ -661,7 +659,8 @@ footer a:hover{color:var(--orange)}
 ════════════════════════════════════════════════ */
 @media(max-width:360px){
   .hero-name{font-size:40px}
-  .hero-photo{width:70%;max-width:220px;max-height:240px;margin-top:50px}
+  .hero-name-wrap{margin-top:44vw}
+  .hero-photo{height:62vw;max-height:240px}
   .h-headline{font-size:18px}
   .btn-p,.btn-g{font-size:12px}
   .stat-num{font-size:30px}
