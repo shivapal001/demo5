@@ -282,11 +282,31 @@ section{position:relative;z-index:10}
   opacity:0;
   margin-top:0;
 }
-.svc-list-item:hover .svc-list-desc,
-.svc-list-item:focus .svc-list-desc{
-  max-height:80px;
+.svc-list-item:hover .svc-list-desc{
+  max-height:120px;
   opacity:1;
   margin-top:8px;
+}
+.svc-list-item.open .svc-list-desc{
+  max-height:120px;
+  opacity:1;
+  margin-top:8px;
+}
+/* Arrow rotates when open */
+.svc-list-item.open .svc-arr-circle{
+  background:var(--orange);
+  border-color:var(--orange);
+  color:#fff;
+  transform:rotate(45deg);
+}
+/* Title turns orange when open */
+.svc-list-item.open .svc-list-title{
+  color:var(--orange);
+}
+.svc-list-item.open .svc-list-tags span{
+  background:rgba(255,107,0,.1);
+  border-color:rgba(255,107,0,.2);
+  color:rgba(255,200,150,.9);
 }
 
 /* Nav pill active section highlight */
@@ -340,11 +360,31 @@ section{position:relative;z-index:10}
   opacity:0;
   margin-top:0;
 }
-.svc-list-item:hover .svc-list-desc,
-.svc-list-item:focus .svc-list-desc{
-  max-height:80px;
+.svc-list-item:hover .svc-list-desc{
+  max-height:120px;
   opacity:1;
   margin-top:8px;
+}
+.svc-list-item.open .svc-list-desc{
+  max-height:120px;
+  opacity:1;
+  margin-top:8px;
+}
+/* Arrow rotates when open */
+.svc-list-item.open .svc-arr-circle{
+  background:var(--orange);
+  border-color:var(--orange);
+  color:#fff;
+  transform:rotate(45deg);
+}
+/* Title turns orange when open */
+.svc-list-item.open .svc-list-title{
+  color:var(--orange);
+}
+.svc-list-item.open .svc-list-tags span{
+  background:rgba(255,107,0,.1);
+  border-color:rgba(255,107,0,.2);
+  color:rgba(255,200,150,.9);
 }
 
 /* Nav pill active section highlight */
@@ -621,11 +661,31 @@ footer a:hover{color:var(--orange)}
   opacity:0;
   margin-top:0;
 }
-.svc-list-item:hover .svc-list-desc,
-.svc-list-item:focus .svc-list-desc{
-  max-height:80px;
+.svc-list-item:hover .svc-list-desc{
+  max-height:120px;
   opacity:1;
   margin-top:8px;
+}
+.svc-list-item.open .svc-list-desc{
+  max-height:120px;
+  opacity:1;
+  margin-top:8px;
+}
+/* Arrow rotates when open */
+.svc-list-item.open .svc-arr-circle{
+  background:var(--orange);
+  border-color:var(--orange);
+  color:#fff;
+  transform:rotate(45deg);
+}
+/* Title turns orange when open */
+.svc-list-item.open .svc-list-title{
+  color:var(--orange);
+}
+.svc-list-item.open .svc-list-tags span{
+  background:rgba(255,107,0,.1);
+  border-color:rgba(255,107,0,.2);
+  color:rgba(255,200,150,.9);
 }
 
 /* Nav pill active section highlight */
@@ -737,7 +797,7 @@ footer a:hover{color:var(--orange)}
       <div class="t-item">99% Positive Reviews <span class="t-dot"></span></div>
       <div class="t-item">Full Stack Developer <span class="t-dot"></span></div>
       <div class="t-item">2 Years Experience <span class="t-dot"></span></div>
-      <div class="t-item">20+ Deliveries <span class="t-dot"></span></div>
+      <div class="t-item">30+ Deliveries <span class="t-dot"></span></div>
       <div class="t-item">99% Positive Reviews <span class="t-dot"></span></div>
       <div class="t-item">Full Stack Developer <span class="t-dot"></span></div>
     </div>
@@ -1249,6 +1309,22 @@ document.getElementById('waFormBtn').addEventListener('click', function(){
     });
   }
   window.addEventListener('scroll', onScroll, {passive:true});
+})();
+
+
+/* ── Service items: click to expand description ── */
+(function(){
+  const items = document.querySelectorAll('.svc-list-item');
+  items.forEach(item => {
+    item.addEventListener('click', function(e){
+      e.preventDefault();
+      const isOpen = this.classList.contains('open');
+      // close all
+      items.forEach(i => i.classList.remove('open'));
+      // open clicked one if it was closed
+      if(!isOpen) this.classList.add('open');
+    });
+  });
 })();
 
 </script>
